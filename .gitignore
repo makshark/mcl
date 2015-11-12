@@ -7,7 +7,35 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
 # Ignore all logfiles and tempfiles.
-/log/*
-!/log/.keep
+/log/*.log
 /tmp
+
+# Ignore local configuration
+.rvmrc
+/config/database.yml
+/config/social_keys.yml
+/config/technomir.yml
+/config/elasticsearch.yml
+/config/config.yml
+/config/initializers/appconf.rb
+/config/secrets.yml
+/db/schema.rb
+.rspec
+.rvmrc
+
+#unit-tests
+/test/
+
+# rubymine
+/.idea/*
+
+# uploads
+/public/system/
+
+/public/assets/
+db/schema.rb
