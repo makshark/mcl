@@ -154,7 +154,7 @@
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.8.2, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.11.2, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.6.6.2, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="pg (v0.18.3, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pg (v0.18.4, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.6.4, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v0.6.3, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v4.2.4, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
@@ -162,6 +162,8 @@
     <orderEntry type="library" scope="PROVIDED" name="rails-dom-testing (v1.0.7, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-html-sanitizer (v1.0.2, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v4.2.4, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rake (v10.4.2, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rdoc (v4.2.0, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-ole (v1.2.11.8, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.4.19, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass-rails (v5.0.4, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
