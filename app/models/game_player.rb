@@ -1,5 +1,6 @@
+# TODO: обязательно пофиксть, если обновляешь игрока, то пересчитывать его лучший ход
 class GamePlayer < ActiveRecord::Base
-  after_save :calculate_points
+  after_create :calculate_points
   belongs_to :game
   belongs_to :player
   enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
