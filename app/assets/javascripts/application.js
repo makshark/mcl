@@ -12,5 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require bootstrap
+//= require moment
+//= require moment/ru
+//= require bootstrap-datetimepicker
+//= require_self
+//TODO: gjподключать js по надобности
+//require_tree ./main_scripts
+$(function () {
+    $('#datetimepicker1').datetimepicker();
+});

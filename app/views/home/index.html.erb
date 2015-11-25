@@ -1,1 +1,142 @@
-<H1> Hello world!!! </H1>
+<div class="space-50"></div>
+<section id="content-region-3" class="padding-40 page-tree-bg">
+  <div class="container">
+    <h3 class="page-tree-text">
+      Рейтинговая игра № (тут вписать номер)
+    </h3>
+  </div>
+</section><!--page-tree end here-->
+
+<div class="space-50"></div>
+<div class="container">
+  <div class="raw">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="leading">Ведущий:</label>
+        <select class="form-control" id="leading">
+          <option>Ник игрока 1</option>
+          <option>Ник игрока 2</option>
+          <option>Ник игрока 3</option>
+          <option>Ник игрока 4</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="victory">Победа:</label>
+        <select class="form-control" id="victory">
+          <option>Мирные</option>
+          <option>Мафия</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="datetimepicker1">Дата:</label>
+
+        <div class='input-group date' id='datetimepicker1'>
+          <input type='text' class="form-control"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="raw">
+    <div class="cold-md-12">
+      <table class="table table-condensed table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>№ п/п</th>
+          <th>Ник</th>
+          <th>Роль</th>
+          <th>Замечания</th>
+          <th>ЛИС</th>
+          <th>ЛИВ</th>
+          <th>Убитый</th>
+        </tr>
+        </thead>
+        <% 10.times.with_index do |k, i| %>
+            <tbody>
+            <tr>
+              <td><%= i %></td>
+              <td>Контент1</td>
+              <td>Контент1</td>
+              <td>Контент1</td>
+              <td>Контент1</td>
+              <td>Контент1</td>
+              <td>Контент1</td>
+            <tr>
+            </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <div class="space-10"></div>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="heading-mini">Круги</h4>
+
+      <!--tabs start-->
+      <div class="tabs">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#home" data-toggle="tab">Круг 0</a></li>
+          <li class=""><a href="#profile" data-toggle="tab">Круг 1</a></li>
+          <li class=""><a href="#messages" data-toggle="tab">Круг 2</a></li>
+          <li class=""><a href="#messages" data-toggle="tab">Круг 3</a></li>
+          <li class=""><a href="#messages" data-toggle="tab">Круг 4</a></li>
+          <li class=""><a href="#messages" data-toggle="tab">Круг 5</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane" id="home">
+            <div class="tab-desc animated fadeInDown">
+
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet sodales lacinia. Curabitur
+                ut purus tincidunt, iaculis elit a, eleifend augue. Phasellus blandit augue vel sollicitudin
+                blandit.
+              </p>
+
+            </div>
+
+          </div>
+          <div class="tab-pane" id="profile">
+            <div class="tab-desc animated fadeIn">
+
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet sodales lacinia. Curabitur
+                ut purus tincidunt, iaculis elit a, eleifend augue. Phasellus blandit augue vel sollicitudin
+                blandit.
+              </p>
+
+            </div>
+          </div>
+          <div class="tab-pane active" id="messages">
+            <div class="tab-desc animated fadeInUp">
+
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet sodales lacinia. Curabitur
+                ut purus tincidunt, iaculis elit a, eleifend augue. Phasellus blandit augue vel sollicitudin
+                blandit.
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--tabs end-->
+    </div>
+    <div class="col-md-6">
+      <h4 class="heading-mini">Комментарии к игре</h4>
+      <textarea class="form-control" rows="8" id="comment"></textarea>
+    </div>
+  </div>
+</div>
+<!--shortcodes row end-->
+<div class="space-10"></div>
+</div>
+<!--bizwrap shorcode page end-->

@@ -1,0 +1,104 @@
+/*============================*/
+/*======dropdowm menu=========*/
+/*============================*/
+.navbar .dropdown-menu {
+  padding: 0;
+  margin: 0;
+  min-width: 190px;
+  background-color: #fff;
+  border: none;
+  @include border-radius(0px);
+  border-top: 2px solid $skincolor !important;
+  li a{
+    color:#888;
+    font-family: $primary-font;
+    padding: 8px 20px;
+    border-bottom: 1px solid #e7e7e7;
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: uppercase;
+    @include transition (all 0.3s ease-in);
+    &:hover{
+      background: $skincolor;
+      color:#fff;
+    }
+  }
+}
+
+/*top bar*/
+.top-bar{
+  background-color: #f9f9f9;
+  .info {
+    margin: 0px;
+    li {
+      font-size: 14px;
+      display: table-cell;
+      vertical-align: middle;
+      height: 40px;
+      color:#555;
+      font-weight: 500;
+      font-size: 13px;
+      a{
+        color:#555;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+/******************
+
+MULTI LEVEL DROPDOWN CSS
+
+*********************/
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: 0px;
+    margin-left: 0px;
+    @include border-radius(0px);
+}
+.dropdown-submenu>.dropdown-menu>li>a{
+
+}
+@media(max-width:767px){
+    .dropdown-submenu>.dropdown-menu{
+        padding-left: 20px;
+    }
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+.dropdown-submenu > a:after {
+    top: 11px;
+    right: 9px;
+    font-size: 11px;
+    content: "\f3d3" !important;
+    font-family: "Ionicons" !important;
+    position: absolute;
+    font-weight: normal;
+    display: inline-block;
+    font-family: FontAwesome;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    @include border-radius(0px);
+}
+
+@media (max-width: 767px){
+    .dropdown-submenu > .dropdown-menu {
+        display: block;
+        margin-left: 15px;
+    }
+}
