@@ -25,6 +25,7 @@ $(function () {
 });
 
 $( document ).ready(function() {
+    //Initialize timer todo: move to another file, also - move all not my js to vendor folder
     $("#DateCountdown").TimeCircles({
         "animation": "smooth",
         "bg_width": 1.2,
@@ -52,6 +53,10 @@ $( document ).ready(function() {
                 "show": true
             }
         }
+    });
+    //Reset timer when user click
+    $('#DateCountdown').click(function() {
+        $(this).TimeCircles().restart();
     });
 
     //Default settings for bootstrap select
