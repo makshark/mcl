@@ -19,6 +19,15 @@
 @import "_blog";
 @import "_portfolio";
 
+//TODO: prepare better solution
+.width-heigth-100 {
+  width: 100%;
+  height: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+}
 h4.heading-mini{
   font-weight: 600;
   text-transform: uppercase;

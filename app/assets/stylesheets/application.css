@@ -16,5 +16,7 @@
  *= require flexslider
  *= require sweetalert
  *= require main_style/style
+ *= require bootstrap-select
+ *= require TimeCircles
  *= require_self
  */
