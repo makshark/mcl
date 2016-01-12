@@ -7,7 +7,6 @@ class Game < ActiveRecord::Base
   belongs_to :best_player_leading, class_name: Player, foreign_key: :best_player_leading_id
   belongs_to :leading, class_name: Player, foreign_key: :leading_id
 
-
   enum victory: { city: 0, mafia: 1, draw: 2 }
 
 
@@ -21,7 +20,7 @@ class Game < ActiveRecord::Base
         'draw'
     end
   end
-
+  # TODO: combine this method with previous
 
   #Придумать решение лучше, чем этот костыль
 
@@ -68,7 +67,6 @@ class Game < ActiveRecord::Base
     best_value             = 13
     best_move              = []
     3.times do
-      # best_move << Player.find_by_nick(game_page.row(18)[best_value].value.sub(' ', '')) if game_page.row(18)[best_value].present? && Game.check_symbol?(game_page.row(18)[best_value])
       best_move << player_nick_by_field(game_page.row(18)[best_value], players)
       best_value +=1
     end

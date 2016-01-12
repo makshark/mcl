@@ -14,11 +14,8 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="leading">Ведущий:</label>
-        <select class="form-control" id="leading">
-          <option>Ник игрока 1</option>
-          <option>Ник игрока 2</option>
-          <option>Ник игрока 3</option>
-          <option>Ник игрока 4</option>
+        <select class="form-control selectpicker" id="leading_id" data-live-search="true"  style="width: 100%;">
+          <option disabled selected>
         </select>
       </div>
     </div>
@@ -27,8 +24,8 @@
         <label for="victory">Победа:</label>
         <select class="form-control" id="victory">
           <option disabled selected>
-          <option>Мирные</option>
-          <option>Мафия</option>
+          <option value="city">Мирные</option>
+          <option value="mafia">Мафия</option>
         </select>
       </div>
     </div>
@@ -37,7 +34,7 @@
         <label for="datetimepicker1">Дата:</label>
 
         <div class='input-group date' id='datetimepicker1'>
-          <input type='text' class="form-control"/>
+          <input id="date" type='text' class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -148,12 +145,12 @@
     </div>
     <div class="col-md-4">
       <h4 class="heading-mini">Комментарии к игре</h4>
-      <textarea class="form-control" rows="8" id="comment"></textarea>
+      <textarea class="form-control" rows="10" id="comment"></textarea>
     </div>
   </div>
 </div>
 <div class="col-md-12 text-right">
-<button type="button" class="btn btn-success" style="margin-right:10%; ">Отправить</button>
+<button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; ">Отправить</button>
   </div>
 <!--shortcodes row end-->
 <div class="space-10"></div>

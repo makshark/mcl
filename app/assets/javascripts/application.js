@@ -24,7 +24,8 @@ $(function () {
     $('#datetimepicker1').datetimepicker();
 });
 
-$( document ).ready(function() {
+$(document).ready(function () {
+    var best_move_game_numbers = [];
     //Initialize timer todo: move to another file, also - move all not my js to vendor folder
     $("#DateCountdown").TimeCircles({
         "animation": "smooth",
@@ -55,7 +56,7 @@ $( document ).ready(function() {
         }
     });
     //Reset timer when user click
-    $('#DateCountdown').click(function() {
+    $('#DateCountdown').click(function () {
         $(this).TimeCircles().restart();
     });
 
@@ -67,58 +68,106 @@ $( document ).ready(function() {
     });
 
 
-
-
     //Best player table
-    $( "#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
-    " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10" ).click(function() {
+    $("#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
+    " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10").click(function () {
         $.each(["#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
-        " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10"], function(index, value) {
-        $(value).html('');
-        });
-
-        $(this).append("<span class='glyphicon glyphicon-user' aria-hidden='true'></span>");
-    });
-   //Best player leading
-    $( "#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
-    " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10" ).click(function() {
-        $.each(["#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
-        " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10"], function(index, value) {
+        " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10"], function (index, value) {
             $(value).html('');
         });
 
-        $(this).append("<span class='glyphicon glyphicon-user' aria-hidden='true'></span>");
+        $(this).append("<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
+    });
+    //Best player leading
+    $("#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
+    " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10").click(function () {
+        $.each(["#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
+        " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10"], function (index, value) {
+            $(value).html('');
+        });
+
+        $(this).append("<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
     });
 // Killed first
-    $( "#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
-    " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10" ).click(function() {
+    $("#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
+    " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10").click(function () {
         $.each(["#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
-        " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10"], function(index, value) {
+        " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10"], function (index, value) {
             $(value).html('');
             $(value).parent().css('background-color', '');
         });
-        $(this).append("<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>");
+        $(this).append("<span id='killed_first_id' class='glyphicon glyphicon-remove' aria-hidden='true'></span>");
         var bestMove = prompt("Введите через пробел 3 числа лучшего хода", "");
         if (bestMove === '') {
             $(this).append('(нету ЛХ)');
+            best_move_game_numbers = [];
         } else {
             $(this).append('(' + bestMove + ')');
+            best_move_game_numbers = bestMove.split(' ');
         }
         $(this).parent().css('background-color', '#F08080');
     });
 
 
 //    TODO: обязательно вынести это в отдельные модули
-    $.post( "/list_of_players", function( data ) {
-        console.log(data);
-        $.each(data, function(index, value){
-            console.log('Проход' + index);
+    $.post("/list_of_players", function (data) {
+        $.each(data, function (index, value) {
             $("#playerNickName1, #playerNickName2, #playerNickName3, #playerNickName4, #playerNickName5," +
-            "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").append(new Option(value, value));
+            "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").append(new Option(value[1], value[0]));
         });
         //Needed to fast refresh body of options
         $("#playerNickName1, #playerNickName2, #playerNickName3, #playerNickName4, #playerNickName5," +
         "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").selectpicker('refresh');
 
     });
+    //Get list of leadings
+    $.post("/list_of_leadings", function (data) {
+        $.each(data, function (index, value) {
+            $("#leading_id").append(new Option(value[1], value[0]));
+            $("#leading_id").selectpicker('refresh');
+        })
+    });
+
+//    Create game
+    $('#createGame').click(function () {
+
+        var best_game_move = [];
+        var comment = $('#comment');
+        var date = $('#date').val();
+        var leading_id = $('#leading_id').val();
+        var victory = $('#victory').val();
+        var killed_first_id_position = $('#killed_first_id').parent().attr('id');
+        var best_player_table_id_position = $('#best_player_table_id').parent().attr('id');
+        var best_player_leading_id_position = $('#best_player_leading_id').parent().attr('id');
+
+        if (killed_first_id_position != undefined) {
+            killed_first_id_position = killed_first_id_position.replace('killedFirst', '');
+            var killed_first_id = $('#playerNickName' + killed_first_id_position).val();
+        }
+
+        if (best_player_table_id_position != undefined) {
+            best_player_table_id_position = best_player_table_id_position.replace('bestPlayerTable', '');
+            var best_player_table_id = $('#playerNickName' + best_player_table_id_position).val();
+        }
+
+        if (best_player_leading_id_position != undefined) {
+            best_player_leading_id_position = best_player_leading_id_position.replace('bestPlayerLeading', '');
+            var best_player_leading_id = $('#playerNickName' + best_player_leading_id_position).val();
+        }
+        if (best_move_game_numbers > 3) {
+            alert('Неправильный лучший ход');
+            //TODO: так же дописать другие варианты-валидации, или поменять вообще этот попап
+        } else {
+            //Добавляем ID каждого игрока
+            $.each(best_move_game_numbers, function (index, value) {
+              best_game_move.push($('#playerNickName' + value).val());
+            });
+        }
+        $.post('/create_game', {
+            victory: victory, date: date, leading_id: leading_id, killed_first_id: killed_first_id, comment: comment,
+            best_player_table_id: best_player_table_id, best_player_leading_id: best_player_leading_id, best_game_move: best_game_move
+        })
+    });
 });
+
+//TODO: после добавление игры обновлять страницу и перекидывать на страницу с самой игрой (уже готовым результатом)
