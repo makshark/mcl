@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+# TODO: создать новую версию гемсета и закомитить ее
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
