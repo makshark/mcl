@@ -62,7 +62,7 @@ $(document).ready(function () {
 
     //Default settings for bootstrap select
     $("#playerNickName1, #playerNickName2, #playerNickName3, #playerNickName4, #playerNickName5," +
-    "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").selectpicker({
+        "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").selectpicker({
         size: 4,
         language: 'RU'
     });
@@ -70,7 +70,7 @@ $(document).ready(function () {
 
     //Best player table
     $("#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
-    " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10").click(function () {
+        " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10").click(function () {
         $.each(["#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
         " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10"], function (index, value) {
             $(value).html('');
@@ -80,7 +80,7 @@ $(document).ready(function () {
     });
     //Best player leading
     $("#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
-    " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10").click(function () {
+        " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10").click(function () {
         $.each(["#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
         " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10"], function (index, value) {
             $(value).html('');
@@ -90,7 +90,7 @@ $(document).ready(function () {
     });
 // Killed first
     $("#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
-    " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10").click(function () {
+        " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10").click(function () {
         $.each(["#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
         " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10"], function (index, value) {
             $(value).html('');
@@ -113,11 +113,11 @@ $(document).ready(function () {
     $.post("/list_of_players", function (data) {
         $.each(data, function (index, value) {
             $("#playerNickName1, #playerNickName2, #playerNickName3, #playerNickName4, #playerNickName5," +
-            "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").append(new Option(value[1], value[0]));
+                "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").append(new Option(value[1], value[0]));
         });
         //Needed to fast refresh body of options
         $("#playerNickName1, #playerNickName2, #playerNickName3, #playerNickName4, #playerNickName5," +
-        "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").selectpicker('refresh');
+            "#playerNickName6, #playerNickName7, #playerNickName8, #playerNickName9, #playerNickName10").selectpicker('refresh');
 
     });
     //Get list of leadings
@@ -130,9 +130,9 @@ $(document).ready(function () {
 
 //    Create game
     $('#createGame').click(function () {
-
         var best_game_move = [];
-        var comment = $('#comment');
+        var game_players = [];
+        var comment = $('#comment').val();
         var date = $('#date').val();
         var leading_id = $('#leading_id').val();
         var victory = $('#victory').val();
@@ -160,13 +160,33 @@ $(document).ready(function () {
         } else {
             //Добавляем ID каждого игрока
             $.each(best_move_game_numbers, function (index, value) {
-              best_game_move.push($('#playerNickName' + value).val());
+                best_game_move.push($('#playerNickName' + value).val());
             });
         }
-        $.post('/create_game', {
-            victory: victory, date: date, leading_id: leading_id, killed_first_id: killed_first_id, comment: comment,
-            best_player_table_id: best_player_table_id, best_player_leading_id: best_player_leading_id, best_game_move: best_game_move
-        })
+        for (var i = 1; i <= 10; i++) {
+            var player = {};
+            player['table_number']  = i;
+            player['player_id'] = $('#playerNickName' + i).val();
+            player['role'] = $('#role' + i).val();
+            player['remark'] = $('#remark' + i).val();
+            game_players.push(player);
+        }
+        $.ajax({
+            method: "POST",
+            url: '/create_game',
+            data: {
+                victory: victory,
+                date: date,
+                leading_id: leading_id,
+                killed_first_id: killed_first_id,
+                comment: comment,
+                game_players: game_players,
+                best_player_table_id: best_player_table_id,
+                best_player_leading_id: best_player_leading_id,
+                best_game_move: best_game_move
+            },
+            dataType: 'json'
+        });
     });
 });
 

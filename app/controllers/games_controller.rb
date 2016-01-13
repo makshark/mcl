@@ -10,12 +10,17 @@ class GamesController < ApplicationController
           BestGameMove.create(game_id: game.id, player_id: best_game_move)
         end
       end
-
       # Создание игроков игры
-      # Работа над очками
-
-
-
+      params[:game_players].each do |player|
+        GamePlayer.create(game_id: game.id, player_id: player[1][:id], role: player[1][:role], remark: player[1][:remark], table_number: player[1][:table_number] )
+      end
+      # Обработка очков первоубиенного (возможно в будущем сделать как-то иначе)
+      # TODO: есть такой же метод, его нужно объеденить, либо сделать решение лучше, мб в будущем вынести это в сам процесс подсчета
+      if pl = GamePlayer.where(player_id: params[:killed_first_id], game_id: game.id).first
+        best_player_move_count = pl.best_move
+        total = pl.points + best_player_move_count
+        pl.update_attribute(:points, total ) unless best_player_move_count == 0
+      end
     end
     render json: { status: 200, message: 'success' }
     # render json: params

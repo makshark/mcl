@@ -35,6 +35,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 gem 'spreadsheet'
 group :development, :test do
   gem 'awesome_print'
+  gem 'byebug'
 end
 
 group :development do

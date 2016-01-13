@@ -67,19 +67,19 @@
               </td>
               <td>
               <select class="form-control" id="role<%= id %>">
-                <option>Мирный</option>
-                <option>Мафия</option>
-                <option>Дон</option>
-                <option>Шериф</option>
+                <option value="citizen">Мирный</option>
+                <option value="mafia">Мафия</option>
+                <option value="don">Дон</option>
+                <option value="sheriff">Шериф</option>
               </select>
               </td>
               <td>
                 <select class="form-control" id="remark<%= id %>">
-                  <option disabled selected>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
+                  <option disabled selected value="0">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
                 </select>
               </td>
               <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
