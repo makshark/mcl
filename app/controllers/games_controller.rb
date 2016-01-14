@@ -1,6 +1,15 @@
 class GamesController < ApplicationController
   # TODO: обязательно подобавлять по 0.5 за все игры
   # TODO: посмотреть пример с транзакциейв аутсорс пипл и сделать все это действие транзакцией
+  # Список всех игр
+  def index
+   @games = Game.all
+  end
+
+  def show_game
+    @game = Game.find(params[:id])
+  end
+
   def create_game
     # Создаем игру со всеми ее параметрами
     # TODO: создать для каждой лиги настройки, в которых будет храниться игра (что бы понимать номер)
@@ -11,18 +20,20 @@ class GamesController < ApplicationController
         end
       end
       # Создание игроков игры
-      params[:game_players].each do |player|
-        GamePlayer.create(game_id: game.id, player_id: player[1][:id], role: player[1][:role], remark: player[1][:remark], table_number: player[1][:table_number] )
+      if params[:game_players].present?
+        params[:game_players].each do |player|
+          GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark], table_number: player[1][:table_number])
+        end
       end
       # Обработка очков первоубиенного (возможно в будущем сделать как-то иначе)
       # TODO: есть такой же метод, его нужно объеденить, либо сделать решение лучше, мб в будущем вынести это в сам процесс подсчета
       if pl = GamePlayer.where(player_id: params[:killed_first_id], game_id: game.id).first
         best_player_move_count = pl.best_move
         total = pl.points + best_player_move_count
-        pl.update_attribute(:points, total ) unless best_player_move_count == 0
+        pl.update_attribute(:points, total) unless best_player_move_count == 0
       end
     end
-    render json: { status: 200, message: 'success' }
+    render json: {status: 200, message: 'success'}
     # render json: params
   end
 

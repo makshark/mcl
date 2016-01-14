@@ -114,4 +114,10 @@ class Game < ActiveRecord::Base
       end
     end
   end
+  # Почистить все, потом нужно будет удалить
+  def self.clear
+    BestGameMove.destroy_all
+    Game.destroy_all
+    GamePlayer.destroy_all
+  end
 end

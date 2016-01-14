@@ -1,0 +1,157 @@
+<div class="space-50"></div>
+<section id="content-region-3" class="padding-40 page-tree-bg">
+  <div class="container">
+    <h3 class="page-tree-text">
+      <%= 'Рейтинговая игра #' + @game.try(:number).to_s %>
+    </h3>
+  </div>
+</section><!--page-tree end here-->
+
+<div class="space-50"></div>
+
+<div class="container">
+  <div class="raw">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="leading">Ведущий:</label>
+        <select class="form-control selectpicker" id="leading_id" data-live-search="true"  style="width: 100%;">
+          <option value="<%= @game.leading_id %>" selected> <%= @game.leading.nick %> </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="victory">Победа:</label>
+        <select class="form-control" id="victory">
+          <option <%= 'selected' if @game.victory == 'city' %> value="city">Мирные</option>
+          <option <%= 'selected' if @game.victory == 'mafia' %> value="mafia">Мафия</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="datetimepicker1">Дата:</label>
+
+        <div class='input-group date' id='datetimepicker1'>
+          <input id="date" type='text' class="form-control" value="<%= @game.date %>"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="raw">
+    <div class="cold-md-12">
+      <table class="table table-condensed table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>№ п/п</th>
+          <th>Ник</th>
+          <th>Роль</th>
+          <th>Замечания</th>
+          <th>ЛИС</th>
+          <th>ЛИВ</th>
+          <th>Убитый</th>
+        </tr>
+        </thead>
+        <% (1..10).each do |id| %>
+            <tbody>
+            <tr>
+              <td><%= id %></td>
+              <td>
+                <select class="form-control selectpicker" id="playerNickName<%= id %>" data-live-search="true"  style="width: 100%;">
+                  <option disabled selected>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" id="role<%= id %>">
+                  <option value="citizen">Мирный</option>
+                  <option value="mafia">Мафия</option>
+                  <option value="don">Дон</option>
+                  <option value="sheriff">Шериф</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" id="remark<%= id %>">
+                  <option disabled selected value="0">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </td>
+              <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
+              <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
+              <td class="pointer text-center" id="killedFirst<%= id %>"></td>
+            <tr>
+            </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <div class="space-10"></div>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="heading-mini">Круги</h4>
+
+      <!--tabs start-->
+      <div class="tabs">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#mm1" data-toggle="tab">Круг 0</a></li>
+          <li class=""><a href="#mm2" data-toggle="tab">Круг 1</a></li>
+          <li class=""><a href="#mm3" data-toggle="tab">Круг 2</a></li>
+          <li class=""><a href="#mm4" data-toggle="tab">Круг 3</a></li>
+          <li class=""><a href="#mm5" data-toggle="tab">Круг 4</a></li>
+          <li class=""><a href="#mm6" data-toggle="tab">Круг 5</a></li>
+        </ul>
+        <!--TODO: добавить возможность сохранений на кругах-->
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <% (1..6).each do |circle| %>
+              <div class="tab-pane <%= 'active' if circle == 1 %>" id="mm<%= circle %>">
+                <div class="tab-desc animated fadeInDown">
+
+                  <p>
+                  <table class="table table-condensed table-bordered table-hover">
+                    <thead>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    </thead>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+
+                  </table>
+                  </p>
+
+                </div>
+
+              </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!--tabs end-->
+    </div>
+    <div class="col-md-2">
+      <div class="pointer" id="DateCountdown" data-date="00:00:00" style="width: 90%;"></div>
+    </div>
+    <div class="col-md-4">
+      <h4 class="heading-mini">Комментарии к игре</h4>
+      <textarea class="form-control" rows="10" id="comment"></textarea>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 text-right">
+  <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; ">Отправить</button>
+</div>
+<!--shortcodes row end-->
+<div class="space-10"></div>
+</div>
+<!--bizwrap shorcode page end-->

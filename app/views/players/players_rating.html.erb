@@ -1,0 +1,34 @@
+<div class="space-50"></div>
+<section id="content-region-3" class="padding-40 page-tree-bg">
+  <div class="container">
+    <h3 class="page-tree-text">
+      Рейтинг
+    </h3>
+  </div>
+</section><!--page-tree end here-->
+
+<div class="space-50"></div>
+<div class="container">
+  <div class="raw">
+    <div class="cold-md-12">
+      <table class="table table-condensed table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Ник</th>
+          <th>Очки</th>
+          <th>Колличество игр</th>
+        </tr>
+        </thead>
+        <% @result_array.each do |player| %>
+            <tbody>
+            <tr>
+              <td><%= player[:nick] %></td>
+              <td><%= player[:rating] %></td>
+              <td><%= player[:game_count] %></td>
+            <tr>
+            </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
