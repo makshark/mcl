@@ -1,0 +1,24 @@
+<%= form_for(@player) do |f| %>
+    <% if @player.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
+
+          <ul>
+            <% @player.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.label 'Ник' %>
+      <%= f.text_field :nick, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Ведущий' %>
+      <%= f.select :leading, [['Нет', false],['Да', true]], { :include_blank => false }, class: 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

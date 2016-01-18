@@ -1,4 +1,4 @@
-<div class="space-50"></div>
+<div class="space-10"></div>
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text">
@@ -14,19 +14,21 @@
       <table class="table table-condensed table-bordered table-hover">
         <thead>
         <tr>
-          <th>ID игры</th>
+          <th>Номер игры</th>
           <th>Ведущий</th>
           <th>Победа</th>
           <th>Дата</th>
+          <th></th>
         </tr>
         </thead>
         <% @games.each do |game| %>
-            <tbody>
+            <tbody >
             <tr>
-              <td><%= game.id %></td>
+              <td><%= game.number || '' %></td>
               <td><%= game.leading.try(:nick) %></td>
               <td><%= game.victory %></td>
               <td><%= game.date %></td>
+              <td><%= link_to('Просмотр', show_game_path(id: game.id)) %></td>
             <tr>
             </tbody>
         <% end %>

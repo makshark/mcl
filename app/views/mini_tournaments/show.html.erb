@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="raw">
+    <div class="col-md-6">
+      <p id="notice"><%= notice %></p>
+      <h2>Результаты мини-турнира <%= @mini_tournament.name %></h2>
+      <table class="table table-condensed table-bordered table-hover table-nonfluid">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Ник</th>
+          <% @mini_tournaments_games.count.times do |count| %>
+              <th><%= count + 1 %></th>
+          <% end %>
+          <th>Итог</th>
+          <th>Замечания</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @mini_tournament_players.each_with_index do |(key, value), index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= key %></td>
+              <% @mini_tournaments_games.count.times do |count| %>
+                  <td><%= value["game_#{count + 1}".to_sym] if value.has_key?("game_#{count + 1}".to_sym) %></td>
+              <% end %>
+              <td><%= 00 %></td>
+              <td><%= value[:remarks] %></td>
+
+            </tr>
+            </tbody>
+        <% end %>
+
+        </table>
+      <%= link_to 'Назад', mini_tournaments_path %>
+    </div>
+  </div>
+</div>

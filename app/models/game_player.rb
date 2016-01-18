@@ -2,6 +2,7 @@
 # TODO: Обязательно добавить в будущем в качестве констант все перестчеты очков для игрока, что бы можно было это легко менять
 
 class GamePlayer < ActiveRecord::Base
+  attr_accessor :position
   after_create :calculate_points
   belongs_to :game
   belongs_to :player

@@ -1,8 +1,8 @@
-<div class="space-50"></div>
+<div class="space-10"></div>
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text">
-      Рейтинговая игра № (тут вписать номер)
+      Рейтинговая игра
     </h3>
   </div>
 </section><!--page-tree end here-->
@@ -11,15 +11,15 @@
 
 <div class="container">
   <div class="raw">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label for="leading">Ведущий:</label>
-        <select class="form-control selectpicker" id="leading_id" data-live-search="true"  style="width: 100%;">
+        <select class="form-control selectpicker" id="leading_id" data-live-search="true" style="width: 100%;">
           <option disabled selected>
         </select>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label for="victory">Победа:</label>
         <select class="form-control" id="victory">
@@ -29,7 +29,7 @@
         </select>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label for="datetimepicker1">Дата:</label>
 
@@ -41,10 +41,21 @@
         </div>
       </div>
     </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="leading">Минитурнир</label>
+        <select class="form-control" id="miniTournamentId" style="width: 100%;">
+          <option selected>
+            <% @mini_tournaments.each do |mini_tournament| %>
+              <option value="<%= mini_tournament.id %>"><%= mini_tournament.name %>
+          <% end %>
+        </select>
+      </div>
+    </div>
   </div>
   <div class="raw">
     <div class="cold-md-12">
-      <table class="table table-condensed table-bordered table-hover">
+      <table class="table table-condensed table-bordered table-hover table-nonfluid">
         <thead>
         <tr>
           <th>№ п/п</th>
@@ -61,17 +72,17 @@
             <tr>
               <td><%= id %></td>
               <td>
-                <select class="form-control selectpicker" id="playerNickName<%= id %>" data-live-search="true"  style="width: 100%;">
+                <select class="form-control selectpicker" id="playerNickName<%= id %>" data-live-search="true" style="width: 100%;">
                   <option disabled selected>
                 </select>
               </td>
               <td>
-              <select class="form-control" id="role<%= id %>">
-                <option value="citizen">Мирный</option>
-                <option value="mafia">Мафия</option>
-                <option value="don">Дон</option>
-                <option value="sheriff">Шериф</option>
-              </select>
+                <select class="form-control" id="role<%= id %>">
+                  <option value="citizen">Мирный</option>
+                  <option value="mafia">Мафия</option>
+                  <option value="don">Дон</option>
+                  <option value="sheriff">Шериф</option>
+                </select>
               </td>
               <td>
                 <select class="form-control" id="remark<%= id %>">
@@ -110,30 +121,30 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <% (1..6).each do |circle| %>
-          <div class="tab-pane <%= 'active' if circle == 1 %>" id="mm<%= circle %>">
-            <div class="tab-desc animated fadeInDown">
+              <div class="tab-pane <%= 'active' if circle == 1 %>" id="mm<%= circle %>">
+                <div class="tab-desc animated fadeInDown">
 
-              <p>
-              <table class="table table-condensed table-bordered table-hover">
-                <thead>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                 </thead>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                  <p>
+                  <table class="table table-condensed table-bordered table-hover">
+                    <thead>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    </thead>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
 
-              </table>
-              </p>
+                  </table>
+                  </p>
 
-            </div>
+                </div>
 
-          </div>
+              </div>
           <% end %>
         </div>
       </div>
@@ -150,8 +161,8 @@
   </div>
 </div>
 <div class="col-md-12 text-right">
-<button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; ">Отправить</button>
-  </div>
+  <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; ">Отправить</button>
+</div>
 <!--shortcodes row end-->
 <div class="space-10"></div>
 </div>

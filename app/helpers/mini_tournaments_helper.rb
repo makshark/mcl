@@ -1,0 +1,2 @@
+module MiniTournamentsHelper
+end

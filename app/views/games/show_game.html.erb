@@ -11,7 +11,7 @@
 
 <div class="container">
   <div class="raw">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label for="leading">Ведущий:</label>
         <select class="form-control selectpicker" id="leading_id" data-live-search="true"  style="width: 100%;">
@@ -19,7 +19,7 @@
         </select>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label for="victory">Победа:</label>
         <select class="form-control" id="victory">
@@ -28,16 +28,21 @@
         </select>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label for="datetimepicker1">Дата:</label>
-
-        <div class='input-group date' id='datetimepicker1'>
-          <input id="date" type='text' class="form-control" value="<%= @game.date %>"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-        </div>
+          <input id="date" type='text' class="form-control" value="<%= @game.date %>" disabled/>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="leading">Минитурнир</label>
+        <select class="form-control" id="miniTournamentId" style="width: 100%;">
+          <option>Простая игра</option>
+            <% @mini_tournaments.each do |mini_tournament| %>
+              <option value="<%= mini_tournament.id %>" <%= 'selected' if mini_tournament.id == @game.mini_tournament_id %>><%= mini_tournament.name %>
+          <% end %>
+        </select>
       </div>
     </div>
   </div>
@@ -55,25 +60,25 @@
           <th>Убитый</th>
         </tr>
         </thead>
-        <% (1..10).each do |id| %>
+        <% @player_of_the_game.each do |player| %>
             <tbody>
             <tr>
-              <td><%= id %></td>
+              <td><%= player.table_number %></td>
               <td>
-                <select class="form-control selectpicker" id="playerNickName<%= id %>" data-live-search="true"  style="width: 100%;">
-                  <option disabled selected>
+                <select class="form-control selectpicker" id="playerNickName<%= player.table_number %>" data-live-search="true"  style="width: 100%;">
+                  <option value="<%= player.try(:player_id) %>" selected> <%= player.try(:player).try(:nick) %> </option>
                 </select>
               </td>
               <td>
-                <select class="form-control" id="role<%= id %>">
-                  <option value="citizen">Мирный</option>
-                  <option value="mafia">Мафия</option>
-                  <option value="don">Дон</option>
-                  <option value="sheriff">Шериф</option>
+                <select class="form-control" id="role<%= player.table_number %>">
+                  <option value="citizen" <%= 'selected' if player.role == 'citizen' %>>Мирный</option>
+                  <option value="mafia" <%= 'selected' if player.role == 'mafia' %>>Мафия</option>
+                  <option value="don" <%= 'selected' if player.role == 'don' %>>Дон</option>
+                  <option value="sheriff" <%= 'selected' if player.role == 'sheriff' %>>Шериф</option>
                 </select>
               </td>
               <td>
-                <select class="form-control" id="remark<%= id %>">
+                <select class="form-control" id="remark<%= player.table_number %>">
                   <option disabled selected value="0">
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -81,9 +86,9 @@
                   <option value="4">4</option>
                 </select>
               </td>
-              <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
-              <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
-              <td class="pointer text-center" id="killedFirst<%= id %>"></td>
+              <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>
+              <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
+              <td class="pointer text-center" id="killedFirst<%= player.table_number %>"> <%= "<span id='killed_first_id' class='glyphicon glyphicon-remove' aria-hidden='true'></span> #{ @best_game_move_numbers }".html_safe if player.player_id == @game.killed_first_id %> </td>
             <tr>
             </tbody>
         <% end %>
@@ -139,19 +144,17 @@
 
       <!--tabs end-->
     </div>
-    <div class="col-md-2">
-      <div class="pointer" id="DateCountdown" data-date="00:00:00" style="width: 90%;"></div>
-    </div>
     <div class="col-md-4">
       <h4 class="heading-mini">Комментарии к игре</h4>
-      <textarea class="form-control" rows="10" id="comment"></textarea>
+      <textarea class="form-control" rows="10" id="comment"><%= @game.comment %></textarea>
     </div>
   </div>
 </div>
 <div class="col-md-12 text-right">
-  <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; ">Отправить</button>
+  <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; "> Обновить </button>
 </div>
 <!--shortcodes row end-->
 <div class="space-10"></div>
 </div>
 <!--bizwrap shorcode page end-->
+<input hidden="true" id="gameId" value="<%= @game.id %>" \>

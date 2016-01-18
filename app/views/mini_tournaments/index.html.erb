@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="raw">
+    <div class="col-md-6">
+      <p id="notice"><%= notice %></p>
+
+      <h1>Список мини-турниров</h1>
+
+      <table class="table table-condensed table-bordered table-hover table-nonfluid">
+        <thead>
+        <tr>
+          <th>Минитурнир</th>
+          <th colspan="3"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @mini_tournaments.each do |mini_tournament| %>
+            <tr>
+              <td><%= mini_tournament.name %></td>
+              <td><%= link_to 'Показать', mini_tournament %></td>
+              <td><%= link_to 'Редактировать', edit_mini_tournament_path(mini_tournament) %></td>
+              <td><%= link_to 'Удалить', mini_tournament, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%= link_to 'New Mini tournament', new_mini_tournament_path %>
+    </div>
+  </div>
+</div>

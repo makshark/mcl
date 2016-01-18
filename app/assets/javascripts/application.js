@@ -130,6 +130,8 @@ $(document).ready(function () {
 
 //    Create game
     $('#createGame').click(function () {
+        var mini_tournament_id = $('#miniTournamentId').val();
+        var game_id = $('#gameId').val();
         var best_game_move = [];
         var game_players = [];
         var comment = $('#comment').val();
@@ -183,9 +185,14 @@ $(document).ready(function () {
                 game_players: game_players,
                 best_player_table_id: best_player_table_id,
                 best_player_leading_id: best_player_leading_id,
-                best_game_move: best_game_move
+                best_game_move: best_game_move,
+                mini_tournament_id: mini_tournament_id,
+                game_id: game_id
             },
             dataType: 'json'
+        }).done(function(response) {
+            alert( "Вы успешно обработали игру" );
+            window.location = response.link;
         });
     });
 });

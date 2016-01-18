@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 
   def index
     # Game.main_excel_parser
+    @mini_tournaments = MiniTournament.all
   end
 
   def main_page

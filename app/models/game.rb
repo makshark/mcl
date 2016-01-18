@@ -6,8 +6,13 @@ class Game < ActiveRecord::Base
   belongs_to :best_player_table, class_name: Player, foreign_key: :best_player_table_id
   belongs_to :best_player_leading, class_name: Player, foreign_key: :best_player_leading_id
   belongs_to :leading, class_name: Player, foreign_key: :leading_id
-
+  belongs_to :season
+  belongs_to :mini_tournament
+  after_create :increase_current_game_season_count
+  before_create :set_number
   enum victory: { city: 0, mafia: 1, draw: 2 }
+
+
 
 
   def self.normalize_victory(victory)
@@ -119,5 +124,16 @@ class Game < ActiveRecord::Base
     BestGameMove.destroy_all
     Game.destroy_all
     GamePlayer.destroy_all
+  end
+
+  def increase_current_game_season_count
+    current_season = Season.where(current: true).first
+    current_season.update(game_number: current_season.game_number + 1)
+  end
+
+  private
+
+  def set_number
+    self.number = Season.current_game_number
   end
 end

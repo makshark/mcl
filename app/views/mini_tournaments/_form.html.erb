@@ -1,0 +1,21 @@
+
+<%= form_for(@mini_tournament) do |f| %>
+  <% if @mini_tournament.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mini_tournament.errors.count, "error") %> prohibited this mini_tournament from being saved:</h2>
+
+      <ul>
+      <% @mini_tournament.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="form-group">
+      <%= f.label 'Название' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

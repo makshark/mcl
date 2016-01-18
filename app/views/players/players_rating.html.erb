@@ -14,16 +14,18 @@
       <table class="table table-condensed table-bordered table-hover">
         <thead>
         <tr>
+          <th>#</th>
           <th>Ник</th>
           <th>Очки</th>
           <th>Колличество игр</th>
         </tr>
         </thead>
         <% @result_array.each do |player| %>
-            <tbody>
+            <tbody class="<%= 'player-rating-background' if player[:position] != '' %>">
             <tr>
+              <td><%= player[:position] %></td>
               <td><%= player[:nick] %></td>
-              <td><%= player[:rating] %></td>
+              <td><%= player[:rating].round %></td>
               <td><%= player[:game_count] %></td>
             <tr>
             </tbody>

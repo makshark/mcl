@@ -20,3 +20,10 @@
  *= require TimeCircles
  *= require_self
  */
+.table-nonfluid {
+    width:  100% !important;
+}
+
+.player-rating-background {
+    background-color: springgreen;
+}
