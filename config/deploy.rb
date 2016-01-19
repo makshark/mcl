@@ -1,5 +1,5 @@
 # Change these
-server '46.101.206.4', port: 3000, roles: [:web, :app, :db], primary: true
+server '46.101.206.4', port: 80, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:makshark/mcl.git'
 set :application,     'mcl'
