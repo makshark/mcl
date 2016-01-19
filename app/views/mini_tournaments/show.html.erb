@@ -24,7 +24,7 @@
               <% @mini_tournaments_games.count.times do |count| %>
                   <td><%= value["game_#{count + 1}".to_sym] if value.has_key?("game_#{count + 1}".to_sym) %></td>
               <% end %>
-              <td><%= 00 %></td>
+              <td><%= value[:total] %></td>
               <td><%= value[:remarks] %></td>
 
             </tr>

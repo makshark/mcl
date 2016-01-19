@@ -30,6 +30,14 @@ class MiniTournamentsController < ApplicationController
         end
       end
     end
+    total = 0
+    @mini_tournament_players.each do |k, v|
+      v.each do |one_player_k, one_player_v|
+        total += one_player_v.to_f if one_player_k != :total && one_player_k != :remarks
+      end
+      @mini_tournament_players[k][:total] = total.round(1)
+      total = 0
+    end
   end
 
   # GET /mini_tournaments/new
