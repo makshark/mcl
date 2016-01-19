@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: mcl_production
-  username: mcl
-  password: <%= ENV['MCL_DATABASE_PASSWORD'] %>
+  username: deploy
+#  password: <%= ENV['MCL_DATABASE_PASSWORD'] %>

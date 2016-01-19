@@ -139,6 +139,7 @@
     <orderEntry type="library" scope="PROVIDED" name="capistrano-bundler (v1.1.4, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capistrano-rails (v1.1.5, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capistrano-rvm (v0.1.2, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="capistrano-secrets-yml (v1.0.0, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capistrano3-puma (v1.2.1, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coderay (v1.1.0, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-rails (v4.1.0, RVM: ruby-2.2.3 [mcl]) [gem]" level="application" />
