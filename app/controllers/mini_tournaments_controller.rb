@@ -38,6 +38,12 @@ class MiniTournamentsController < ApplicationController
       @mini_tournament_players[k][:total] = total.round(1)
       total = 0
     end
+    @mini_tournament_players = @mini_tournament_players.sort_by {|_, value| value[:total]}.reverse.to_h
+    colors = %w(#FFD700 #FFE647 #FFFD96)
+    @mini_tournament_players.each_with_index do |player, index|
+      @mini_tournament_players[player.first][:colors] = colors[index]
+      break if index == 2
+    end
   end
 
   # GET /mini_tournaments/new

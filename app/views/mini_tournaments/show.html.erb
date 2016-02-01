@@ -16,8 +16,8 @@
         </tr>
         </thead>
 
-        <tbody>
         <% @mini_tournament_players.each_with_index do |(key, value), index| %>
+        <tbody style="background-color: <%= value[:colors] %>">
             <tr>
               <td><%= index + 1 %></td>
               <td><%= key %></td>
