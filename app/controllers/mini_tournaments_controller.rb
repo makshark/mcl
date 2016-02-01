@@ -39,7 +39,7 @@ class MiniTournamentsController < ApplicationController
       total = 0
     end
     @mini_tournament_players = @mini_tournament_players.sort_by {|_, value| value[:total]}.reverse.to_h
-    colors = %w(#FFD700 #FFE647 #FFFD96)
+    colors = %w(#FFD700 #FFE647 #FFFC65)
     @mini_tournament_players.each_with_index do |player, index|
       @mini_tournament_players[player.first][:colors] = colors[index]
       break if index == 2
