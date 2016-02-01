@@ -192,27 +192,31 @@ $(document).ready(function () {
             player['remark'] = $('#remark' + i).val();
             game_players.push(player);
         }
-        $.ajax({
-            method: "POST",
-            url: '/create_game',
-            data: {
-                victory: victory,
-                date: date,
-                leading_id: leading_id,
-                killed_first_id: killed_first_id,
-                comment: comment,
-                game_players: game_players,
-                best_player_table_id: best_player_table_id,
-                best_player_leading_id: best_player_leading_id,
-                best_game_move: best_game_move,
-                mini_tournament_id: mini_tournament_id,
-                game_id: game_id
-            },
-            dataType: 'json'
-        }).done(function (response) {
-            alert("Вы успешно обработали игру");
-            window.location = response.link;
-        });
+        if (check_players_roles(game_players)) {
+            $.ajax({
+                method: "POST",
+                url: '/create_game',
+                data: {
+                    victory: victory,
+                    date: date,
+                    leading_id: leading_id,
+                    killed_first_id: killed_first_id,
+                    comment: comment,
+                    game_players: game_players,
+                    best_player_table_id: best_player_table_id,
+                    best_player_leading_id: best_player_leading_id,
+                    best_game_move: best_game_move,
+                    mini_tournament_id: mini_tournament_id,
+                    game_id: game_id
+                },
+                dataType: 'json'
+            }).done(function (response) {
+                alert("Вы успешно обработали игру");
+                window.location = response.link;
+            });
+        } else {
+            alert ('Вы ошиблись при заполнении ролей, проверьте еще раз роли');
+        }
     });
     // если не админ и смотрит игру - то не может редактировать
     $.post('/admin_or_not', function (result) {
@@ -224,5 +228,15 @@ $(document).ready(function () {
         }
     });
 });
-
+function check_players_roles(players) {
+   var roles = { citizen: 6, mafia: 2, don: 1, sheriff: 1 }
+    $.each(players, function(index, value) {
+       roles[value['role']] = roles[value['role']] - 1;
+    });
+    if (roles['citizen'] === 0 && roles['mafia'] === 0 && roles['don'] === 0 && roles['sheriff'] === 0){
+        return true;
+    } else {
+        return false;
+    }
+}
 //TODO: после добавление игры обновлять страницу и перекидывать на страницу с самой игрой (уже готовым результатом)
