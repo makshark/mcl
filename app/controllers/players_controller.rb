@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!, only: [:create, :update, :destroy, :index]
 
   def list_of_players
     render json: Player.pluck(:id, :nick)
@@ -66,7 +67,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     respond_to do |format|
-      if @player.save
+      if @player.save(validate: false)
         format.html { redirect_to @player, notice: 'Player was successfully created.' }
         format.json { render :show, status: :created, location: @player }
       else

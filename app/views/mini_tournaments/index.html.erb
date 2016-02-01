@@ -18,16 +18,19 @@
             <tr>
               <td><%= mini_tournament.name %></td>
               <td><%= link_to 'Показать', mini_tournament %></td>
-              <td><%= link_to 'Редактировать', edit_mini_tournament_path(mini_tournament) %></td>
-              <td><%= link_to 'Удалить', mini_tournament, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+              <% if current_admin.present? %>
+                  <td><%= link_to 'Редактировать', edit_mini_tournament_path(mini_tournament) %></td>
+                  <td><%= link_to 'Удалить', mini_tournament, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+              <% end %>
             </tr>
         <% end %>
         </tbody>
       </table>
 
       <br>
-
-      <%= link_to 'New Mini tournament', new_mini_tournament_path %>
+      <% if current_admin.present? %>
+          <%= link_to 'New Mini tournament', new_mini_tournament_path %>
+      <% end %>
     </div>
   </div>
 </div>

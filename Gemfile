@@ -59,3 +59,4 @@ end
 
 gem 'puma'
 gem 'dotenv-rails'
+gem 'devise'

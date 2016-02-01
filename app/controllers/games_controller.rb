@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  # TODO: обязательно подобавлять по 0.5 за все игры
+  before_action :authenticate_admin!, only: [:create_game]
+  # TODO: обязательно подобавлять по 0.25 за все игры
   # TODO: посмотреть пример с транзакциейв аутсорс пипл и сделать все это действие транзакцией
   # Список всех игр
   def index

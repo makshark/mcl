@@ -66,49 +66,68 @@ $(document).ready(function () {
         size: 4,
         language: 'RU'
     });
+    var admin;
+    $.post('/admin_or_not', function (result) {
+        admin = result;
 
+        if (admin === true) {
+            //Best player table
+            $("#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
+                " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10").click(function (event) {
+                var element = $(event.target).html();
+                if (element === '') {
+                    $.each(["#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
+                    " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10"], function (index, value) {
+                        $(value).html('');
+                    });
+                    $(this).append("<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
 
-    //Best player table
-    $("#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
-        " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10").click(function () {
-        $.each(["#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
-        " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10"], function (index, value) {
-            $(value).html('');
-        });
-
-        $(this).append("<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
-    });
-    //Best player leading
-    $("#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
-        " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10").click(function () {
-        $.each(["#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
-        " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10"], function (index, value) {
-            $(value).html('');
-        });
-
-        $(this).append("<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
-    });
+                } else {
+                    $.each(["#bestPlayerTable1, #bestPlayerTable2, #bestPlayerTable3, #bestPlayerTable4, #bestPlayerTable5," +
+                    " #bestPlayerTable6, #bestPlayerTable7, #bestPlayerTable8, #bestPlayerTable9, #bestPlayerTable10"], function (index, value) {
+                        $(value).html('');
+                    });
+                }
+            });
+            //Best player leading
+            $("#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
+                " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10").click(function (event) {
+                var element = $(event.target).html();
+                if (element === '') {
+                    $.each(["#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
+                    " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10"], function (index, value) {
+                        $(value).html('');
+                    });
+                    $(this).append("<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
+                } else {
+                    $.each(["#bestPlayerLeading1, #bestPlayerLeading2, #bestPlayerLeading3, #bestPlayerLeading4, #bestPlayerLeading5," +
+                    " #bestPlayerLeading6, #bestPlayerLeading7, #bestPlayerLeading8, #bestPlayerLeading9, #bestPlayerLeading10"], function (index, value) {
+                        $(value).html('');
+                    });
+                }
+            });
 // Killed first
-    $("#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
-        " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10").click(function () {
-        $.each(["#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
-        " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10"], function (index, value) {
-            $(value).html('');
-            $(value).parent().css('background-color', '');
-        });
-        $(this).append("<span id='killed_first_id' class='glyphicon glyphicon-remove' aria-hidden='true'></span>");
-        var bestMove = prompt("Введите через пробел 3 числа лучшего хода", "");
-        if (bestMove === '') {
-            $(this).append('(нету ЛХ)');
-            best_move_game_numbers = [];
-        } else {
-            $(this).append('(' + bestMove + ')');
-            best_move_game_numbers = bestMove.split(' ');
+            $("#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
+                " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10").click(function () {
+                $.each(["#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
+                " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10"], function (index, value) {
+                    $(value).html('');
+                    $(value).parent().css('background-color', '');
+                });
+                $(this).append("<span id='killed_first_id' class='glyphicon glyphicon-remove' aria-hidden='true'></span>");
+                var bestMove = prompt("Введите через пробел 3 числа лучшего хода", "");
+                if (bestMove === '') {
+                    $(this).append('(нету ЛХ)');
+                    best_move_game_numbers = [];
+                } else {
+                    $(this).append('(' + bestMove + ')');
+                    best_move_game_numbers = bestMove.split(' ');
+                }
+                $(this).parent().css('background-color', '#F08080');
+            });
+
         }
-        $(this).parent().css('background-color', '#F08080');
     });
-
-
 //    TODO: обязательно вынести это в отдельные модули
     $.post("/list_of_players", function (data) {
         $.each(data, function (index, value) {
@@ -167,7 +186,7 @@ $(document).ready(function () {
         }
         for (var i = 1; i <= 10; i++) {
             var player = {};
-            player['table_number']  = i;
+            player['table_number'] = i;
             player['player_id'] = $('#playerNickName' + i).val();
             player['role'] = $('#role' + i).val();
             player['remark'] = $('#remark' + i).val();
@@ -190,10 +209,19 @@ $(document).ready(function () {
                 game_id: game_id
             },
             dataType: 'json'
-        }).done(function(response) {
-            alert( "Вы успешно обработали игру" );
+        }).done(function (response) {
+            alert("Вы успешно обработали игру");
             window.location = response.link;
         });
+    });
+    // если не админ и смотрит игру - то не может редактировать
+    $.post('/admin_or_not', function (result) {
+        if (result === false && window.location.href.indexOf("/show_game/") > -1) {
+            $('.form-control').attr('disabled', true);
+            $("[id*='bestPlayerTable']").removeClass('pointer');
+            $("[id*='bestPlayerLeading']").removeClass('pointer');
+            $("[id*='killedFirst']").removeClass('pointer');
+        }
     });
 });
 

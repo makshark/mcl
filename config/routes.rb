@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   root 'home#main_page'
   resources :players
   resources :mini_tournaments
@@ -9,4 +10,5 @@ Rails.application.routes.draw do
   get '/players_rating', to: 'players#players_rating'
   get '/add_game', to: 'home#index', as: :add_game
   get '/show_game/:id', to: 'games#show_game', as: :show_game
+  post '/admin_or_not', to: 'application#admin_or_not'
 end

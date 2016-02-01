@@ -2,13 +2,18 @@
   <div class="top-bar">
     <div class="container">
       <ul class="info list-inline pull-left hidden-xs">
-        <li><a href="mailto:mafia@gmail.com" class="hover-color"><i class="ion-ios-email-outline"></i> mafia_cl@mail.ru </a></li>
+        <li><a href="mailto:mafia@gmail.com" class="hover-color"><i class="ion-ios-email-outline"></i> mafia_cl@mail.ru
+        </a></li>
         <li><i class="ion-iphone"></i> +380676474745</li>
       </ul>
       <div class="pull-right">
         <ul class="info list-inline hidden-xs">
           <!--<li><a href="/users/sign_up" class="hover-color">Создать аккаунт</a></li>-->
-          <li><a href="#" class="hover-color"><i class="ion-man"></i> Войти</a></li>
+          <% if current_admin.present? %>
+              <li><a href="/admins/sign_out" class="hover-color"><i class="ion-man"></i> Выйти</a></li>
+          <% else %>
+              <li><a href="/admins/sign_in" class="hover-color"><i class="ion-man"></i> Войти</a></li>
+          <% end %>
         </ul>
       </div>
     </div><!--container end-->
@@ -33,21 +38,28 @@
           <li class="">
             <a href="/games">Список игр</a>
           </li>
+          <% if current_admin.present? %>
+              <li class="">
+                <a href="<%= add_game_path %>">Добавить игру</a>
+              </li>
+          <% end %>
           <li class="">
-            <a href="<%= add_game_path %>" >Добавить игру</a>
+            <a href="/players_rating">Рейтинг игроков</a>
           </li>
+          <% if current_admin.present? %>
+              <li class="">
+                <a href="<%= players_path %>">Игроки</a>
+              </li>
+          <% end %>
           <li class="">
-            <a href="/players_rating" >Рейтинг игроков</a>
+            <a href="<%= mini_tournaments_path %>">Минитурниры</a>
           </li>
-          <li class= "">
-            <a href="<%= players_path %>" >Игроки</a>
-          </li>
-          <li class= "">
-            <a href="<%= mini_tournaments_path %>" >Минитурниры</a>
-          </li>
-          <li class="social-nav"><a href="https://www.facebook.com/mafiaclK" target="_blank"><i class="ion-social-facebook"></i></a></li>
-          <li class="social-nav"><a href="https://twitter.com/Mafia_Cl" target="_blank"><i class="ion-social-twitter"></i></a></li>
-          <li class="social-nav"><a href="https://www.youtube.com/mafiaclK" target="_blank"><i class="ion-social-youtube"></i></a></li>
+          <li class="social-nav">
+            <a href="https://www.facebook.com/mafiaclK" target="_blank"><i class="ion-social-facebook"></i></a></li>
+          <li class="social-nav">
+            <a href="https://twitter.com/Mafia_Cl" target="_blank"><i class="ion-social-twitter"></i></a></li>
+          <li class="social-nav">
+            <a href="https://www.youtube.com/mafiaclK" target="_blank"><i class="ion-social-youtube"></i></a></li>
         </ul>
 
       </div><!--/.nav-collapse -->

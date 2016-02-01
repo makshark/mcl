@@ -14,8 +14,8 @@
     <div class="col-md-3">
       <div class="form-group">
         <label for="leading">Ведущий:</label>
-        <select class="form-control selectpicker" id="leading_id" data-live-search="true"  style="width: 100%;">
-          <option value="<%= @game.leading_id %>" selected> <%= @game.leading.nick %> </option>
+        <select class="form-control selectpicker" id="leading_id" data-live-search="true" style="width: 100%;">
+          <option value="<%= @game.try(:leading_id) %>" selected> <%= @game.try(:leading).try(:nick) %> </option>
         </select>
       </div>
     </div>
@@ -31,7 +31,7 @@
     <div class="col-md-3">
       <div class="form-group">
         <label for="datetimepicker1">Дата:</label>
-          <input id="date" type='text' class="form-control" value="<%= @game.date %>" disabled/>
+        <input id="date" type='text' class="form-control" value="<%= @game.date %>" disabled/>
       </div>
     </div>
     <div class="col-md-3">
@@ -39,7 +39,7 @@
         <label for="leading">Минитурнир</label>
         <select class="form-control" id="miniTournamentId" style="width: 100%;">
           <option>Простая игра</option>
-            <% @mini_tournaments.each do |mini_tournament| %>
+          <% @mini_tournaments.each do |mini_tournament| %>
               <option value="<%= mini_tournament.id %>" <%= 'selected' if mini_tournament.id == @game.mini_tournament_id %>><%= mini_tournament.name %>
           <% end %>
         </select>
@@ -65,7 +65,7 @@
             <tr>
               <td><%= player.table_number %></td>
               <td>
-                <select class="form-control selectpicker" id="playerNickName<%= player.table_number %>" data-live-search="true"  style="width: 100%;">
+                <select class="form-control selectpicker" id="playerNickName<%= player.table_number %>" data-live-search="true" style="width: 100%;">
                   <option value="<%= player.try(:player_id) %>" selected> <%= player.try(:player).try(:nick) %> </option>
                 </select>
               </td>
@@ -144,15 +144,17 @@
 
       <!--tabs end-->
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h4 class="heading-mini">Комментарии к игре</h4>
       <textarea class="form-control" rows="10" id="comment"><%= @game.comment %></textarea>
     </div>
   </div>
 </div>
-<div class="col-md-12 text-right">
-  <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; "> Обновить </button>
-</div>
+<% if current_admin.present? %>
+    <div class="col-md-12 text-right">
+      <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; "> Обновить</button>
+    </div>
+<% end %>
 <!--shortcodes row end-->
 <div class="space-10"></div>
 </div>

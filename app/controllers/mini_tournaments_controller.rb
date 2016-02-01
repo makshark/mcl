@@ -1,6 +1,6 @@
 class MiniTournamentsController < ApplicationController
   before_action :set_mini_tournament, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_admin!, only: [:create, :update, :destroy]
   # GET /mini_tournaments
   # GET /mini_tournaments.json
   def index
