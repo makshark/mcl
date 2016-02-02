@@ -50,7 +50,7 @@ class GamesController < ApplicationController
         # Создание игроков игры
         if params[:game_players].present?
           params[:game_players].each do |player|
-            GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark], table_number: player[1][:table_number])
+            GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark].to_i, table_number: player[1][:table_number])
           end
         end
       end

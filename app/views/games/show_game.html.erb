@@ -79,11 +79,11 @@
               </td>
               <td>
                 <select class="form-control" id="remark<%= player.table_number %>">
-                  <option disabled selected value="0">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
+                  <option selected value="0">                               0 </option>
+                  <option <%= 'selected' if player.remark == 1 %> value="1">1</option>
+                  <option <%= 'selected' if player.remark == 2 %> value="2">2</option>
+                  <option <%= 'selected' if player.remark == 3 %> value="3">3</option>
+                  <option <%= 'selected' if player.remark == 4 %> value="4">4</option>
                 </select>
               </td>
               <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>

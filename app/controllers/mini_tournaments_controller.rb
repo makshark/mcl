@@ -21,13 +21,9 @@ class MiniTournamentsController < ApplicationController
       players_of_game.each do |player|
         nick = player.player.nick
         @mini_tournament_players[nick] ||= {}
-        if @mini_tournament_players.has_key?(player.player.nick)
-          @mini_tournament_players[nick][game_symbol] = player.points.to_s
-          # @mini_tournament_players[nick][:remarks] += player.remark # TODO: обязательно добавить
-        else
-          @mini_tournament_players[nick][:remarks] = player.remark
-          @mini_tournament_players[nick][game_symbol] = player.points.to_s
-        end
+        @mini_tournament_players[nick][:remarks] || @mini_tournament_players[nick][:remarks] = 0
+        @mini_tournament_players[nick][game_symbol] = player.points.to_s
+        @mini_tournament_players[nick][:remarks] += player.remark
       end
     end
     total = 0
@@ -38,7 +34,7 @@ class MiniTournamentsController < ApplicationController
       @mini_tournament_players[k][:total] = total.round(1)
       total = 0
     end
-    @mini_tournament_players = @mini_tournament_players.sort_by {|_, value| value[:total]}.reverse.to_h
+    @mini_tournament_players = @mini_tournament_players.sort_by { |_, value| value[:total] }.reverse.to_h
     colors = %w(#FFD700 #FFE647 #FFFC65)
     @mini_tournament_players.each_with_index do |player, index|
       @mini_tournament_players[player.first][:colors] = colors[index]
