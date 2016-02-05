@@ -20,7 +20,7 @@ class PlayersController < ApplicationController
       game_count = GamePlayer.where(player_id: player[0]).count
       nick = Player.where(id: player[0]).first
       # 0.25 - это дополнительный коефициент за колличество игр
-      rating = (player[1] + 0.25 * game_count.to_f ) / game_count.to_f * 100
+      rating = player[1]  / game_count.to_f * 100 + (0.25 * game_count.to_f)
       object[:game_count] = game_count
       object[:nick] = nick.try(:nick)
       object[:rating] = rating
