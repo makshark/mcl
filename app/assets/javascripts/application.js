@@ -149,6 +149,7 @@ $(document).ready(function () {
 
 //    Create game
     $('#createGame').click(function () {
+        var game_number = $('#gameNumber').val();
         var mini_tournament_id = $('#miniTournamentId').val();
         var game_id = $('#gameId').val();
         var best_game_move = [];
@@ -190,6 +191,7 @@ $(document).ready(function () {
             player['player_id'] = $('#playerNickName' + i).val();
             player['role'] = $('#role' + i).val();
             player['remark'] = $('#remark' + i).val();
+            player['penalty_amount'] = $('#penaltyAmount' + i).val();
             game_players.push(player);
         }
         if (check_players_roles(game_players)) {
@@ -207,7 +209,8 @@ $(document).ready(function () {
                     best_player_leading_id: best_player_leading_id,
                     best_game_move: best_game_move,
                     mini_tournament_id: mini_tournament_id,
-                    game_id: game_id
+                    game_id: game_id,
+                    number: game_number
                 },
                 dataType: 'json'
             }).done(function (response) {
@@ -229,7 +232,7 @@ $(document).ready(function () {
     });
 });
 function check_players_roles(players) {
-   var roles = { citizen: 6, mafia: 2, don: 1, sheriff: 1 }
+   var roles = { citizen: 6, mafia: 2, don: 1, sheriff: 1 };
     $.each(players, function(index, value) {
        roles[value['role']] = roles[value['role']] - 1;
     });

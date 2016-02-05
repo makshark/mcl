@@ -16,11 +16,13 @@ class PlayersController < ApplicationController
     #TODO: очень быдловское решение, если не исправлю - будет стыдно
     players_points_count = GamePlayer.group(:player_id)
                                .sum(:points)
+    # players_penalty_amount = GamePlayer.group(:player_id).sum(:penalty_amount)
     players_points_count.each do |player|
       game_count = GamePlayer.where(player_id: player[0]).count
       nick = Player.where(id: player[0]).first
+      object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
       # 0.25 - это дополнительный коефициент за колличество игр
-      rating = player[1]  / game_count.to_f * 100 + (0.25 * game_count.to_f)
+      rating = ((player[1]  / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
       object[:game_count] = game_count
       object[:nick] = nick.try(:nick)
       object[:rating] = rating

@@ -18,6 +18,7 @@
           <th>Ник</th>
           <th>Коэффициент</th>
           <th>Количество игр</th>
+          <th>Количество штрафов</th>
         </tr>
         </thead>
         <% @result_array.each do |player| %>
@@ -27,6 +28,7 @@
               <td><%= player[:nick] %></td>
               <td><%= player[:rating].round %></td>
               <td><%= player[:game_count] %></td>
+              <td><%= player[:penalty_amount] %></td>
             <tr>
             </tbody>
         <% end %>

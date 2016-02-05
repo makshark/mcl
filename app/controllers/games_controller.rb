@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   # TODO: посмотреть пример с транзакциейв аутсорс пипл и сделать все это действие транзакцией
   # Список всех игр
   def index
-    @games = Game.all
+    @games = Game.all.order(:number)
   end
 
   def show_game
@@ -31,7 +31,7 @@ class GamesController < ApplicationController
       if params[:game_players].present?
         GamePlayer.where(game_id: game.id).destroy_all
         params[:game_players].each do |player|
-          GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark], table_number: player[1][:table_number])
+          GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark], table_number: player[1][:table_number], penalty_amount: player[1][:penalty_amount])
         end
       end
       if params[:best_game_move].present?
@@ -50,7 +50,7 @@ class GamesController < ApplicationController
         # Создание игроков игры
         if params[:game_players].present?
           params[:game_players].each do |player|
-            GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark].to_i, table_number: player[1][:table_number])
+            GamePlayer.create(game_id: game.id, player_id: player[1][:player_id], role: player[1][:role], remark: player[1][:remark].to_i, table_number: player[1][:table_number], penalty_amount: player[1][:penalty_amount])
           end
         end
       end
@@ -69,7 +69,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.permit(:date, :leading_id, :victory, :killed_first_id, :best_player_table_id, :best_player_leading_id, :comment, :mini_tournament_id)
+    params.permit(:date, :leading_id, :victory, :killed_first_id, :best_player_table_id, :best_player_leading_id, :comment, :mini_tournament_id, :number)
   end
 
 end

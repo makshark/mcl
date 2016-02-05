@@ -65,6 +65,7 @@
           <th>ЛИС</th>
           <th>ЛИВ</th>
           <th>Убитый</th>
+          <th>Штраф</th>
         </tr>
         </thead>
         <% (1..10).each do |id| %>
@@ -96,6 +97,14 @@
               <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
               <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
               <td class="pointer text-center" id="killedFirst<%= id %>"></td>
+              <td>
+                <select class="form-control" id="penaltyAmount<%= id %>">
+                  <option selected value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </td>
             <tr>
             </tbody>
         <% end %>

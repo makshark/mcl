@@ -58,6 +58,7 @@
           <th>ЛИС</th>
           <th>ЛИВ</th>
           <th>Убитый</th>
+          <th>Штраф</th>
         </tr>
         </thead>
         <% @player_of_the_game.each do |player| %>
@@ -89,6 +90,14 @@
               <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>
               <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
               <td class="pointer text-center" id="killedFirst<%= player.table_number %>"> <%= "<span id='killed_first_id' class='glyphicon glyphicon-remove' aria-hidden='true'></span> #{ @best_game_move_numbers }".html_safe if player.player_id == @game.killed_first_id %> </td>
+              <td>
+                <select class="form-control" id="penaltyAmount<%= player.table_number %>">
+                  <option selected value="0">0</option>
+                  <option <%= 'selected' if player.penalty_amount == 1 %> value="1">1</option>
+                  <option <%= 'selected' if player.penalty_amount == 2 %> value="2">2</option>
+                  <option <%= 'selected' if player.penalty_amount == 3 %> value="3">3</option>
+                </select>
+              </td>
             <tr>
             </tbody>
         <% end %>
@@ -152,6 +161,8 @@
 </div>
 <% if current_admin.present? %>
     <div class="col-md-12 text-right">
+      <label>Номер игры</label>
+      <input value="<%= @game.number %>" id="gameNumber">
       <button id="createGame" type="button" class="btn btn-success" style="margin-right:10%; "> Обновить</button>
     </div>
 <% end %>
