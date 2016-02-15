@@ -23,9 +23,9 @@
               <td><%= index + 1 %></td>
               <td><%= key %></td>
               <% @mini_tournaments_games.count.times do |count| %>
-                  <td><%= value["game_#{count + 1}".to_sym] if value.has_key?("game_#{count + 1}".to_sym) %></td>
+                  <td><%= print_points_without_zero(value["game_#{count + 1}".to_sym]) if value.has_key?("game_#{count + 1}".to_sym) %></td>
               <% end %>
-              <td><%= value[:total] %></td>
+              <td><%= print_points_without_zero(value[:total]) %></td>
               <td><%= value[:remarks] %></td>
               <td><%= value[:penalty_amount] %></td>
 
