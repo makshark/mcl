@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   # TODO: посмотреть пример с транзакциейв аутсорс пипл и сделать все это действие транзакцией
   # Список всех игр
   def index
-    @games = Game.all.order(:number)
+    @games = Game.all.order(number: :desc)
   end
 
   def show_game
