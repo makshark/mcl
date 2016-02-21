@@ -66,15 +66,14 @@ class MafiaStarsController < ApplicationController
           @hard_card = 'за мафию'
           # Получаем колличество игр выигранных игроком за мафию
           player_win_mafia = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 1 AND (game_players.role = 0 OR game_players.role = 2) AND game_players.player_id = (?)', @tour.id, player[0]).count
-          object[:rating] += @additional_coefficient * player_win_mafia
+          object[:rating] += @additional_coefficient * player_win_mafia + (object[:penalty_amount] * (-0.5))
         else
           @additional_coefficient = (games_mafia_victories - games_city_victories).to_f / 2.0 * 0.1
           @hard_card = 'за мирных'
           # Получаем колличество игр выигранных игроком за мирных
           player_win_citizen = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 0 AND (game_players.role = 1 OR game_players.role = 3) AND game_players.player_id = (?)', @tour.id, player[0]).count
-          object[:rating] += @additional_coefficient * player_win_citizen
+          object[:rating] += @additional_coefficient * player_win_citizen + (object[:penalty_amount] * (-0.5))
         end
-
       end
       ###############################
       @result_array << object

@@ -47,6 +47,7 @@
               <th title="количество побед мафией">М</th>
               <th title="Убийств в первую ночь">У</th>
               <th title="количество лучших ходов (2 или 3 чёрных)">ЛХ</th>
+              <th title="количество штрафов, каждый штраф -0,5">Шт</th>
             </tr>
             </thead>
             <% @result_array.each_with_index do |player, index| %>
@@ -62,6 +63,7 @@
                   <td><%= player[:mafia_count] %></td>
                   <td><%= player[:killed_first_night] %></td>
                   <td><%= player[:best_moves] %></td>
+                  <td><%= player[:penalty_amount] %></td>
                 <tr>
                 </tbody>
             <% end %>
