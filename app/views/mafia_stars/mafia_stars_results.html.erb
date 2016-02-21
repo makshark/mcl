@@ -27,7 +27,13 @@
       <% if @result_array.empty? %>
           <h4> Серия еще не началась </h4>
       <% else %>
-          <label>Сложная карта - <%= @hard_card + ' применяется коеф. сложности ' + (2 + @additional_coefficient).to_s %> </label>
+          <% if @hard_card == 'отсутствует' %>
+              <label>Сложная карта
+                - <%= @hard_card  %> </label>
+          <% else %>
+              <label>Сложная карта
+                - <%= @hard_card + ' применяется коеф. сложности ' + (2 + @additional_coefficient).to_s %> </label>
+          <% end %>
           <table class="table table-condensed table-bordered table-hover">
             <thead>
             <tr>

@@ -54,10 +54,8 @@ class MafiaStarsController < ApplicationController
       object[:best_moves] = best_moves
 
       # Роздел подсчета сложной карты
-      # TODO: переписать в простой запрос, т.к. нужно только количество игр
-      game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?)', @tour.id, player[0]).count
-
-      games_city_victories = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 0', @tour.id).count
+      game_count = Game.where(big_tournament_tour_id: @tour.id).count
+      games_city_victories = Game.where(big_tournament_tour_id: @tour.id, victory: 'city').count
       games_mafia_victories = game_count - games_city_victories
       # узнаем сложную карту
       if (games_city_victories - games_mafia_victories == 0) || games_city_victories == 0 || games_mafia_victories == 0
