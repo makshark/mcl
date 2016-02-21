@@ -60,19 +60,19 @@ class MafiaStarsController < ApplicationController
       # узнаем сложную карту
       if (games_city_victories - games_mafia_victories == 0) || games_city_victories == 0 || games_mafia_victories == 0
          @hard_card = 'отсутствует'
-      else
+      else #TODO: коеф считается каждый раз в цикле - это бредятина
         if games_city_victories > games_mafia_victories
           @additional_coefficient = (games_city_victories - games_mafia_victories).to_f / 2.0 * 0.1
           @hard_card = 'за мафию'
           # Получаем колличество игр выигранных игроком за мафию
           player_win_mafia = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 1 AND (game_players.role = 0 OR game_players.role = 2) AND game_players.player_id = (?)', @tour.id, player[0]).count
-          # object[:rating] += @additional_coefficient * player_win_mafia
+          object[:rating] += @additional_coefficient * player_win_mafia
         else
           @additional_coefficient = (games_mafia_victories - games_city_victories).to_f / 2.0 * 0.1
           @hard_card = 'за мирных'
           # Получаем колличество игр выигранных игроком за мирных
-          player_win_citizen = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 1 AND (game_players.role = 1 OR game_players.role = 3) AND game_players.player_id = (?)', @tour.id, player[0]).count
-          # object[:rating] += @additional_coefficient * player_win_citizen
+          player_win_citizen = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 0 AND (game_players.role = 1 OR game_players.role = 3) AND game_players.player_id = (?)', @tour.id, player[0]).count
+          object[:rating] += @additional_coefficient * player_win_citizen
         end
 
       end
