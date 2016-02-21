@@ -2,7 +2,11 @@
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text">
-      Рейтинговая игра
+      <% unless params[:tournament] == 'ms' %>
+          Рейтинговая игра
+      <% else %>
+          Mafia Stars Game
+      <% end %>
     </h3>
   </div>
 </section><!--page-tree end here-->
@@ -43,13 +47,24 @@
     </div>
     <div class="col-md-3">
       <div class="form-group">
-        <label for="leading">Минитурнир</label>
-        <select class="form-control" id="miniTournamentId" style="width: 100%;">
-          <option selected>
-            <% @mini_tournaments.each do |mini_tournament| %>
-              <option value="<%= mini_tournament.id %>"><%= mini_tournament.name %>
-          <% end %>
-        </select>
+        <% unless params[:tournament] == 'ms' %>
+            <label for="leading">Минитурнир</label>
+            <select class="form-control" id="miniTournamentId" style="width: 100%;">
+              <option selected>
+                <% @mini_tournaments.each do |mini_tournament| %>
+                  <option value="<%= mini_tournament.id %>"><%= mini_tournament.name %>
+              <% end %>
+            </select>
+        <% else %>
+            <label for="leading">Тур</label>
+            <!-- bigTournamentId перемутано с перемутано с туром TODO: fix-->
+            <select class="form-control" id="bigTournamentId" style="width: 100%;">
+              <option selected>
+                <% @mafia_stars_tours.each do |big_tournament| %>
+                  <option value="<%= big_tournament.id %>"><%= big_tournament.name %>
+              <% end %>
+            </select>
+        <% end %>
       </div>
     </div>
   </div>
@@ -62,8 +77,14 @@
           <th>Ник</th>
           <th>Роль</th>
           <th>Замечания</th>
-          <th>ЛИС</th>
-          <th>ЛИВ</th>
+          <% if params[:tournament] == 'ms' %>
+            <th>ЛИС1</th>
+            <th>ЛИС2</th>
+            <th>ЛИС3</th>
+          <% else %>
+            <th>ЛИС</th>
+            <th>ЛИВ</th>
+          <% end %>
           <th>Убитый</th>
           <th>Штраф</th>
         </tr>
@@ -94,8 +115,14 @@
                   <option value="4">4</option>
                 </select>
               </td>
-              <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
-              <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
+              <% if params[:tournament] == 'ms' %>
+                  <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
+                  <td class="pointer text-center" id="bestPlayerLeading1<%= id %>"></td>
+                  <td class="pointer text-center" id="bestPlayerLeading2<%= id %>"></td>
+              <% else %>
+                  <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
+                  <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
+              <% end %>
               <td class="pointer text-center" id="killedFirst<%= id %>"></td>
               <td>
                 <select class="form-control" id="penaltyAmount<%= id %>">

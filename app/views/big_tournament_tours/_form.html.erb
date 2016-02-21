@@ -1,0 +1,28 @@
+<%= form_for(@big_tournament_tour) do |f| %>
+  <% if @big_tournament_tour.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@big_tournament_tour.errors.count, "error") %> prohibited this big_tournament_tour from being saved:</h2>
+
+      <ul>
+      <% @big_tournament_tour.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="form-group">
+      <%= f.label 'Название' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Турнир' %>
+      <%= f.select :big_tournament_id, BigTournament.all.collect {|p| [p.name, p.id] }, { include_blank: false },  class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Игроки(*введите через пробел 10 ников)' %>
+      <%= f.text_area :list_of_players, class: 'form-control' %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

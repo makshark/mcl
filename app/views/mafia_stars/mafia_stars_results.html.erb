@@ -1,0 +1,66 @@
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <div class="raw">
+    <div class="col-md-2">
+      <h3><strong>Участники</strong></h3>
+      <% @list_of_players.each do |nick| %>
+          <label><%= nick %></label></br>
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <h3><strong>Игры</strong></h3>
+
+      <div class="col-md-1">
+        <% @games[0..9].each_with_index do |game, index| %>
+            <label><%= link_to '№' + (index + 1).to_s, "/show_game/#{game.id}/?tournament=ms" %></label></br>
+        <% end %>
+      </div>
+      <% if @games.count >= 11 %>
+          <div class="col-md-1">
+            <% @games[10..50].each_with_index do |game, index| %>
+                <label><%= link_to '№' + (index + 11).to_s, "/show_game/#{game.id}/?tournament=ms" %></label></br>
+            <% end %>
+      <% end %>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h3><strong>Рейтинг <%= @tour.name %></strong></h3>
+      <% if @result_array.empty? %>
+          <h4> Серия еще не началась </h4>
+      <% else %>
+          <label>Сложная карта - ? </label>
+          <table class="table table-condensed table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>№</th>
+              <th>Ник</th>
+              <th title="общая сумма набранных балов">Б</th>
+              <th title="количество званий 'Лучший игрок'">Л</th>
+              <th title="общее количество побед">П</th>
+              <th title="количество побед шерифом">Ш</th>
+              <th title="количество побед доном">Д</th>
+              <th title="количество побед мафией">М</th>
+              <th title="Убийств в первую ночь">У</th>
+              <th title="количество лучших ходов (2 или 3 чёрных)">ЛХ</th>
+            </tr>
+            </thead>
+            <% @result_array.each_with_index do |player, index| %>
+                <tbody class="<%= 'player-rating-background' if index == 0 %>">
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= player[:nick] %></td>
+                  <td><%= player[:rating] %></td>
+                  <td><%= player[:best_count] %></td>
+                  <td><%= player[:victories] %></td>
+                  <td><%= player[:sheriff_count] %></td>
+                  <td><%= player[:don_count] %></td>
+                  <td><%= player[:mafia_count] %></td>
+                  <td><%= player[:killed_first_night] %></td>
+                  <td><%= player[:best_moves] %></td>
+                <tr>
+                </tbody>
+            <% end %>
+          </table>
+      <% end %>
+    </div>
+  </div>
+</div>

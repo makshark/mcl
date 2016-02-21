@@ -13,14 +13,18 @@ class PlayersController < ApplicationController
   def players_rating
     @result_array = []
     object = {}
-    #TODO: очень быдловское решение, если не исправлю - будет стыдно
-    players_points_count = GamePlayer.group(:player_id)
-                               .sum(:points)
+    # TODO: очень быдловское решение, если не исправлю - будет стыдно
+    # players_points_count = GamePlayer.group(:player_id)
+    #                            .sum(:points)
+    players_points_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL').group(:player_id).sum(:points)
     # players_penalty_amount = GamePlayer.group(:player_id).sum(:penalty_amount)
     players_points_count.each do |player|
-      game_count = GamePlayer.where(player_id: player[0]).count
+      # game_count = GamePlayer.where(player_id: player[0]).count
+      game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).count
+
       nick = Player.where(id: player[0]).first
-      object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
+      # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
+      object[:penalty_amount] = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).sum(:penalty_amount)
       # 0.25 - это дополнительный коефициент за колличество игр
       rating = ((player[1]  / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
       object[:game_count] = game_count

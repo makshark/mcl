@@ -106,6 +106,44 @@ $(document).ready(function () {
                     });
                 }
             });
+
+            //Best player leading1
+            $("#bestPlayerLeading11, #bestPlayerLeading12, #bestPlayerLeading13, #bestPlayerLeading14, #bestPlayerLeading15," +
+                " #bestPlayerLeading16, #bestPlayerLeading17, #bestPlayerLeading18, #bestPlayerLeading19, #bestPlayerLeading110").click(function (event) {
+                var element = $(event.target).html();
+                if (element === '') {
+                    $.each(["#bestPlayerLeading11, #bestPlayerLeading12, #bestPlayerLeading13, #bestPlayerLeading14, #bestPlayerLeading15," +
+                    " #bestPlayerLeading16, #bestPlayerLeading17, #bestPlayerLeading18, #bestPlayerLeading19, #bestPlayerLeading110"], function (index, value) {
+                        $(value).html('');
+                    });
+                    $(this).append("<span id='best_player_leading1_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
+                } else {
+                    $.each(["#bestPlayerLeading11, #bestPlayerLeading12, #bestPlayerLeading13, #bestPlayerLeading14, #bestPlayerLeading15," +
+                    " #bestPlayerLeading16, #bestPlayerLeading17, #bestPlayerLeading18, #bestPlayerLeading19, #bestPlayerLeading110"], function (index, value) {
+                        $(value).html('');
+                    });
+                }
+            });
+
+
+            //Best player leading2
+            $("#bestPlayerLeading21, #bestPlayerLeading22, #bestPlayerLeading23, #bestPlayerLeading24, #bestPlayerLeading25," +
+                " #bestPlayerLeading26, #bestPlayerLeading27, #bestPlayerLeading28, #bestPlayerLeading29, #bestPlayerLeading210").click(function (event) {
+                var element = $(event.target).html();
+                if (element === '') {
+                    $.each(["#bestPlayerLeading21, #bestPlayerLeading22, #bestPlayerLeading23, #bestPlayerLeading24, #bestPlayerLeading25," +
+                    " #bestPlayerLeading26, #bestPlayerLeading27, #bestPlayerLeading28, #bestPlayerLeading29, #bestPlayerLeading210"], function (index, value) {
+                        $(value).html('');
+                    });
+                    $(this).append("<span id='best_player_leading2_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>");
+                } else {
+                    $.each(["#bestPlayerLeading21, #bestPlayerLeading22, #bestPlayerLeading23, #bestPlayerLeading24, #bestPlayerLeading25," +
+                    " #bestPlayerLeading26, #bestPlayerLeading27, #bestPlayerLeading28, #bestPlayerLeading29, #bestPlayerLeading210"], function (index, value) {
+                        $(value).html('');
+                    });
+                }
+            });
+
 // Killed first
             $("#killedFirst1, #killedFirst2, #killedFirst3, #killedFirst4, #killedFirst5," +
                 " #killedFirst6, #killedFirst7, #killedFirst8, #killedFirst9, #killedFirst10").click(function () {
@@ -151,6 +189,7 @@ $(document).ready(function () {
     $('#createGame').click(function () {
         var game_number = $('#gameNumber').val();
         var mini_tournament_id = $('#miniTournamentId').val();
+        var big_tournament_tour_id = $('#bigTournamentId').val();
         var game_id = $('#gameId').val();
         var best_game_move = [];
         var game_players = [];
@@ -161,6 +200,8 @@ $(document).ready(function () {
         var killed_first_id_position = $('#killed_first_id').parent().attr('id');
         var best_player_table_id_position = $('#best_player_table_id').parent().attr('id');
         var best_player_leading_id_position = $('#best_player_leading_id').parent().attr('id');
+        var best_player_leading1_id_position = $('#best_player_leading1_id').parent().attr('id');
+        var best_player_leading2_id_position = $('#best_player_leading2_id').parent().attr('id');
 
         if (killed_first_id_position != undefined) {
             killed_first_id_position = killed_first_id_position.replace('killedFirst', '');
@@ -176,6 +217,18 @@ $(document).ready(function () {
             best_player_leading_id_position = best_player_leading_id_position.replace('bestPlayerLeading', '');
             var best_player_leading_id = $('#playerNickName' + best_player_leading_id_position).val();
         }
+
+        if (best_player_leading1_id_position != undefined) {
+            best_player_leading1_id_position = best_player_leading1_id_position.replace('bestPlayerLeading1', '');
+            var best_player_leading1_id = $('#playerNickName' + best_player_leading1_id_position).val();
+        }
+
+        if (best_player_leading2_id_position != undefined) {
+            best_player_leading2_id_position = best_player_leading2_id_position.replace('bestPlayerLeading2', '');
+            var best_player_leading2_id = $('#playerNickName' + best_player_leading2_id_position).val();
+        }
+
+
         if (best_move_game_numbers > 3) {
             alert('Неправильный лучший ход');
             //TODO: так же дописать другие варианты-валидации, или поменять вообще этот попап
@@ -207,8 +260,11 @@ $(document).ready(function () {
                     game_players: game_players,
                     best_player_table_id: best_player_table_id,
                     best_player_leading_id: best_player_leading_id,
+                    best_player_leading1_id: best_player_leading1_id,
+                    best_player_leading2_id: best_player_leading2_id,
                     best_game_move: best_game_move,
                     mini_tournament_id: mini_tournament_id,
+                    big_tournament_tour_id: big_tournament_tour_id,
                     game_id: game_id,
                     number: game_number
                 },
@@ -227,6 +283,8 @@ $(document).ready(function () {
             $('.form-control').attr('disabled', true);
             $("[id*='bestPlayerTable']").removeClass('pointer');
             $("[id*='bestPlayerLeading']").removeClass('pointer');
+            $("[id*='bestPlayerLeading1']").removeClass('pointer');
+            $("[id*='bestPlayerLeading2']").removeClass('pointer');
             $("[id*='killedFirst']").removeClass('pointer');
         }
     });

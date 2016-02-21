@@ -18,6 +18,8 @@ class GamesController < ApplicationController
     end
     @best_game_move_numbers += ')'
     @mini_tournaments = MiniTournament.all
+    @mafia_stars_tours = BigTournamentTour.all # TODO: обязательно это исправить
+
 
   end
 
@@ -63,13 +65,18 @@ class GamesController < ApplicationController
       pl.update_attribute(:points, total) unless best_player_move_count == 0
     end
 
-    render json: {status: 200, message: 'success', link: "/show_game/#{game.id}" }
+    if params[:big_tournament_tour_id].present?
+      redirect_link = "/show_game/#{game.id}/?tournament=ms"
+    else
+      redirect_link = "/show_game/#{game.id}"
+    end
+    render json: { status: 200, message: 'success', link: redirect_link }
   end
 
   private
 
   def game_params
-    params.permit(:date, :leading_id, :victory, :killed_first_id, :best_player_table_id, :best_player_leading_id, :comment, :mini_tournament_id, :number)
+    params.permit(:date, :leading_id, :victory, :killed_first_id, :best_player_table_id, :best_player_leading_id, :best_player_leading1_id, :best_player_leading2_id, :comment, :mini_tournament_id, :number, :big_tournament_tour_id)
   end
 
 end

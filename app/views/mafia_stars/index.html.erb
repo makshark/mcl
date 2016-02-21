@@ -1,0 +1,23 @@
+<div class="space-10"></div>
+<section id="content-region-3" class="padding-40 page-tree-bg">
+  <div class="container">
+    <h3 class="page-tree-text">
+      Mafia Stars
+    </h3>
+  </div>
+</section><!--page-tree end here-->
+
+<div class="space-50"></div>
+<div class="container">
+  <div class="raw">
+    <div class="cold-md-12">
+      <% if current_admin.present? %>
+          <a href="<%= add_game_path(tournament: 'ms') %>">Добавить результаты игры</a></br>
+          <a href="<%= new_big_tournament_tour_path %>">Добавить новый тур</a></br>
+      <% end %>
+      <% @tours.each do |tour| %>
+          <a href="<%= mafia_stars_results_path(id: tour.id) %>"> <%= tour.name %></a></br>
+      <% end %>
+    </div>
+  </div>
+</div>

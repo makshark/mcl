@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   def index
     # Game.main_excel_parser
     @mini_tournaments = MiniTournament.all
+    @mafia_stars_tours = BigTournamentTour.all # TODO: обязательно это исправить
   end
 
   def main_page

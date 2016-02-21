@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="raw">
+    <div class="col-md-6">
+      <p id="notice"><%= notice %></p>
+
+      <h1>Список туров туниров</h1>
+
+      <table class="table table-condensed table-bordered table-hover table-nonfluid">
+        <thead>
+        <tr>
+          <th>Название тура</th>
+          <th>Относится к турниру</th>
+          <th colspan="2"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @big_tournament_tours.each do |big_tournament_tour| %>
+            <tr>
+              <td><%= big_tournament_tour.name %></td>
+              <td><%= big_tournament_tour.big_tournament.name %></td>
+              <td><%= link_to 'Edit', edit_big_tournament_tour_path(big_tournament_tour) %></td>
+              <td><%= link_to 'Destroy', big_tournament_tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%= link_to 'Создать тур', new_big_tournament_tour_path %></br>
+      <%= link_to 'Назад', mafia_stars_path %>
+    </div>
+  </div>
+</div>

@@ -5,13 +5,16 @@ class Game < ActiveRecord::Base
   belongs_to :killed_first, class_name: Player, foreign_key: :killed_first_id
   belongs_to :best_player_table, class_name: Player, foreign_key: :best_player_table_id
   belongs_to :best_player_leading, class_name: Player, foreign_key: :best_player_leading_id
+  belongs_to :best_player_leading1, class_name: Player, foreign_key: :best_player_leading1_id
+  belongs_to :best_player_leading2, class_name: Player, foreign_key: :best_player_leading2_id
   belongs_to :leading, class_name: Player, foreign_key: :leading_id
   belongs_to :season
   belongs_to :mini_tournament
+  belongs_to :big_tournament_tour
   after_create :increase_current_game_season_count
   before_create :set_number
   enum victory: { city: 0, mafia: 1, draw: 2 }
-
+  scope :current_season, -> { where(big_tournament_tour: nil) } # TODO: в будущем, возможно переделать это решение
 
 
 
@@ -127,6 +130,7 @@ class Game < ActiveRecord::Base
   end
 
   def increase_current_game_season_count
+    return if self.big_tournament_tour.present?
     current_season = Season.where(current: true).first
     current_season.update(game_number: current_season.game_number + 1)
   end

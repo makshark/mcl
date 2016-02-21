@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'home#main_page'
   resources :players
   resources :mini_tournaments
+  resources :big_tournament_tours
   post '/list_of_players', to: 'players#list_of_players'
   post '/list_of_leadings', to: 'players#list_of_leadings'
   post '/create_game', to: 'games#create_game'
@@ -11,4 +12,8 @@ Rails.application.routes.draw do
   get '/add_game', to: 'home#index', as: :add_game
   get '/show_game/:id', to: 'games#show_game', as: :show_game
   post '/admin_or_not', to: 'application#admin_or_not'
+
+
+  get '/mafia_stars', to: 'mafia_stars#index', as: :mafia_stars
+  get '/mafia_stars_results/:id', to: 'mafia_stars#mafia_stars_results', as: :mafia_stars_results
 end

@@ -2,7 +2,11 @@
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text">
-      <%= 'Рейтинговая игра #' + @game.try(:number).to_s %>
+      <% unless params[:tournament] == 'ms' %>
+          <%= 'Рейтинговая игра #' + @game.try(:number).to_s %>
+      <% else %>
+          Mafia Stars Game
+      <% end %>
     </h3>
   </div>
 </section><!--page-tree end here-->
@@ -36,13 +40,24 @@
     </div>
     <div class="col-md-3">
       <div class="form-group">
-        <label for="leading">Минитурнир</label>
-        <select class="form-control" id="miniTournamentId" style="width: 100%;">
-          <option>Простая игра</option>
-          <% @mini_tournaments.each do |mini_tournament| %>
-              <option value="<%= mini_tournament.id %>" <%= 'selected' if mini_tournament.id == @game.mini_tournament_id %>><%= mini_tournament.name %>
-          <% end %>
-        </select>
+        <% unless params[:tournament] == 'ms' %>
+            <label for="leading">Минитурнир</label>
+            <select class="form-control" id="miniTournamentId" style="width: 100%;">
+              <option>Простая игра</option>
+              <% @mini_tournaments.each do |mini_tournament| %>
+                  <option value="<%= mini_tournament.id %>" <%= 'selected' if mini_tournament.id == @game.mini_tournament_id %>><%= mini_tournament.name %>
+              <% end %>
+            </select>
+        <% else %>
+            <label for="leading">Тур</label>
+            <select class="form-control" id="miniTournamentId" style="width: 100%;">
+              <!--<option>Простая игра</option>-->
+              <% @mafia_stars_tours.each do |mafia_stars_tour| %>
+                  <option value="<%= mafia_stars_tour.id %>" <%= 'selected' if mafia_stars_tour.id == @game.big_tournament_tour_id %>><%= mafia_stars_tour.name %>
+              <% end %>
+            </select>
+        <% end %>
+
       </div>
     </div>
   </div>
@@ -55,8 +70,14 @@
           <th>Ник</th>
           <th>Роль</th>
           <th>Замечания</th>
-          <th>ЛИС</th>
-          <th>ЛИВ</th>
+          <% if params[:tournament] == 'ms' %>
+              <th>ЛИС1</th>
+              <th>ЛИС2</th>
+              <th>ЛИС3</th>
+          <% else %>
+              <th>ЛИС</th>
+              <th>ЛИВ</th>
+          <% end %>
           <th>Убитый</th>
           <th>Штраф</th>
         </tr>
@@ -80,15 +101,21 @@
               </td>
               <td>
                 <select class="form-control" id="remark<%= player.table_number %>">
-                  <option selected value="0">                               0 </option>
+                  <option selected value="0"> 0</option>
                   <option <%= 'selected' if player.remark == 1 %> value="1">1</option>
                   <option <%= 'selected' if player.remark == 2 %> value="2">2</option>
                   <option <%= 'selected' if player.remark == 3 %> value="3">3</option>
                   <option <%= 'selected' if player.remark == 4 %> value="4">4</option>
                 </select>
               </td>
-              <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>
-              <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
+              <% if params[:tournament] == 'ms' %>
+                  <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
+                  <td class="pointer text-center" id="bestPlayerLeading1<%= player.table_number %>"><%= "<span id='best_player_leading1_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading1_id %></td>
+                  <td class="pointer text-center" id="bestPlayerLeading2<%= player.table_number %>"><%= "<span id='best_player_leading2_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading2_id %></td>
+            <% else %>
+                  <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>
+                  <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
+              <% end %>
               <td class="pointer text-center" id="killedFirst<%= player.table_number %>"> <%= "<span id='killed_first_id' class='glyphicon glyphicon-remove' aria-hidden='true'></span> #{ @best_game_move_numbers }".html_safe if player.player_id == @game.killed_first_id %> </td>
               <td>
                 <select class="form-control" id="penaltyAmount<%= player.table_number %>">
