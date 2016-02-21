@@ -14,8 +14,6 @@ class MafiaStarsController < ApplicationController
     object = {}
     players_points_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = ?', @tour.id).group(:player_id).sum(:points)
     players_points_count.each do |player|
-      # game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?)', @tour.id, player[0]).count
-
       nick = Player.where(id: player[0]).first
       object[:penalty_amount] = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?)', @tour.id, player[0]).sum(:penalty_amount)
       # TODO: не забыть сложную карту
@@ -32,7 +30,7 @@ class MafiaStarsController < ApplicationController
       end
       ######
       # Сыграл Шерифом (3 - enum для шерифа)
-      sheriff_count =  GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?) AND game_players.role = 3', @tour.id, player[0]).count
+      sheriff_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?) AND game_players.role = 3', @tour.id, player[0]).count
       ######
       # Сыграл мафией (дон - 2)
       don_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?) AND game_players.role = 2', @tour.id, player[0]).count
@@ -54,11 +52,38 @@ class MafiaStarsController < ApplicationController
       object[:mafia_count] = mafia_count
       object[:killed_first_night] = killed_first_night
       object[:best_moves] = best_moves
+
+      # Роздел подсчета сложной карты
+      # TODO: переписать в простой запрос, т.к. нужно только количество игр
+      game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?)', @tour.id, player[0]).count
+
+      games_city_victories = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 0', @tour.id).count
+      games_mafia_victories = game_count - games_city_victories
+      # узнаем сложную карту
+      if (games_city_victories - games_mafia_victories == 0) || games_city_victories == 0 || games_mafia_victories == 0
+         @hard_card = 'отсутствует'
+      else
+        if games_city_victories > games_mafia_victories
+          @additional_coefficient = (games_city_victories - games_mafia_victories).to_f / 2.0 * 0.1
+          @hard_card = 'за мафию'
+          # Получаем колличество игр выигранных игроком за мафию
+          player_win_mafia = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 1 AND (game_players.role = 0 OR game_players.role = 2)', @tour.id).count
+          object[:rating] += @additional_coefficient * player_win_mafia
+        else
+          @additional_coefficient = (games_mafia_victories - games_city_victories).to_f / 2.0 * 0.1
+          @hard_card = 'за мирных'
+          # Получаем колличество игр выигранных игроком за мирных
+          player_win_citizen = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 1 AND (game_players.role = 1 OR game_players.role = 3)', @tour.id).count
+          object[:rating] += @additional_coefficient * player_win_citizen
+        end
+
+      end
+      ###############################
       @result_array << object
       object = {}
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
-    @games = Game.where(big_tournament_tour_id: params[:id]).order(:created_at) 
+    @games = Game.where(big_tournament_tour_id: params[:id]).order(:created_at)
   end
 
 

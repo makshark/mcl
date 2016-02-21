@@ -27,7 +27,7 @@
       <% if @result_array.empty? %>
           <h4> Серия еще не началась </h4>
       <% else %>
-          <label>Сложная карта - ? </label>
+          <label>Сложная карта - <%= @hard_card + ' применяется коеф. сложности ' + (2 + @additional_coefficient).to_s %> </label>
           <table class="table table-condensed table-bordered table-hover">
             <thead>
             <tr>
@@ -48,7 +48,7 @@
                 <tr>
                   <td><%= index + 1 %></td>
                   <td><%= player[:nick] %></td>
-                  <td><%= player[:rating] %></td>
+                  <td><%= print_points_without_zero(player[:rating].round(2)) %></td>
                   <td><%= player[:best_count] %></td>
                   <td><%= player[:victories] %></td>
                   <td><%= player[:sheriff_count] %></td>
