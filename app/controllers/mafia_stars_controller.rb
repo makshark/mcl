@@ -81,8 +81,9 @@ class MafiaStarsController < ApplicationController
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
     @games = Game.where(big_tournament_tour_id: params[:id]).order(:created_at)
-    @total_victory_citizen = Game.where(big_tournament_tour_id: params[:id], victory: 'city').count
-    @total_victory_mafia = Game.where(big_tournament_tour_id: params[:id], victory: 'mafia').count
+    # TODO: разобраться, почему не работает, когда обращаюь через mafia, city (в поле victory)
+    @total_victory_citizen = Game.where(big_tournament_tour_id: params[:id], victory: 0).count
+    @total_victory_mafia = Game.where(big_tournament_tour_id: params[:id], victory: 1).count
   end
 
 
