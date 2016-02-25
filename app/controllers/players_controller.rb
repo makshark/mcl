@@ -35,7 +35,7 @@ class PlayersController < ApplicationController
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
     # Получаем колличество игр, которые необходимо сыгать для рейтинга
-    game_count = (Game.count.to_f / 100) * 25
+    game_count = (Game.where(big_tournament_tour_id: nil).count.to_f / 100) * 25
     position = 1
     @result_array.each do |player|
       # Отыграл 25 процентов игр, или нет
