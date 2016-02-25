@@ -28,11 +28,9 @@
           <h4> Серия еще не началась </h4>
       <% else %>
           <% if @hard_card == 'отсутствует' %>
-              <label>Сложная карта
-                - <%= @hard_card  %> </label>
+              <label><%= @hard_card  %> </label>
           <% else %>
-              <label>Сложная карта
-                - <%= @hard_card + ' применяется коеф. сложности ' + (1 + @additional_coefficient).to_s + ("(город - #{@total_victory_citizen}, мафия - #{@total_victory_mafia})") %> </label>
+              <label><%= @hard_card + ' применяется коеф. сложности ' + (1 + @additional_coefficient).to_s + (" (город - #{@total_victory_citizen}, мафия - #{@total_victory_mafia})") %> </label>
           <% end %>
           <table class="table table-condensed table-bordered table-hover">
             <thead>
