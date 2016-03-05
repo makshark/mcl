@@ -66,7 +66,8 @@
                 </tbody>
             <% end %>
           </table>
-          <%= image_tag ('tour1_image.jpg'), class: 'center-block' %>
+          <%= image_tag ('tour1_image.jpg'), class: 'center-block' if params[:id] == '1' %>
+          <%= image_tag ('tour2_image.jpg'), class: 'center-block' if params[:id] == '2' %>
       <% end %>
     </div>
   </div>
