@@ -24,49 +24,53 @@
     </div>
     <div class="col-md-8">
       <h3><strong>Рейтинг <%= @tour.name %></strong></h3>
-      <% if @result_array.empty? %>
-          <h4> Серия еще не началась </h4>
-          <!--<h4>Результаты пока недоступны</h4>-->
-      <% else %>
-          <% if @hard_card == 'отсутствует' %>
-              <label><%= @hard_card  %> </label>
+      <% if current_user.present? %>
+          <% if @result_array.empty? %>
+              <h4> Серия еще не началась </h4>
+              <!--<h4>Результаты пока недоступны</h4>-->
           <% else %>
-              <label><%= @hard_card + ' применяется коеф. сложности ' + (1 + @additional_coefficient).to_s + (" (город - #{@total_victory_citizen}, мафия - #{@total_victory_mafia})") %> </label>
+              <% if @hard_card == 'отсутствует' %>
+                  <label><%= @hard_card %> </label>
+              <% else %>
+                  <label><%= @hard_card + ' применяется коеф. сложности ' + (1 + @additional_coefficient).to_s + (" (город - #{@total_victory_citizen}, мафия - #{@total_victory_mafia})") %> </label>
+              <% end %>
+              <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Ник</th>
+                  <th title="общая сумма набранных балов">Б</th>
+                  <th title="количество званий 'Лучший игрок'">Л</th>
+                  <th title="общее количество побед">П</th>
+                  <th title="количество игр шерифом">Ш</th>
+                  <th title="количество игр доном">Д</th>
+                  <th title="количество игр мафией">М</th>
+                  <th title="Убийств в первую ночь">У</th>
+                  <th title="количество лучших ходов (2 или 3 чёрных)">ЛХ</th>
+                  <th title="количество штрафов, каждый штраф -0,5">Шт</th>
+                </tr>
+                </thead>
+                <% @result_array.each_with_index do |player, index| %>
+                    <tbody style="<%= 'background-color: #FFD700;' if (index == 0 || index == 1) %>" class="<%= 'player-rating-background' if (index == 2 || index == 3 || index == 4) %>">
+                    <tr>
+                      <td><%= index + 1 %></td>
+                      <td><%= player[:nick] %></td>
+                      <td><%= print_points_without_zero(player[:rating].round(2)) %></td>
+                      <td><%= player[:best_count] %></td>
+                      <td><%= player[:victories] %></td>
+                      <td><%= player[:sheriff_count] %></td>
+                      <td><%= player[:don_count] %></td>
+                      <td><%= player[:mafia_count] %></td>
+                      <td><%= player[:killed_first_night] %></td>
+                      <td><%= player[:best_moves] %></td>
+                      <td><%= player[:penalty_amount] %></td>
+                    <tr>
+                    </tbody>
+                <% end %>
+              </table>
           <% end %>
-          <table class="table table-condensed table-bordered table-hover">
-            <thead>
-            <tr>
-              <th>№</th>
-              <th>Ник</th>
-              <th title="общая сумма набранных балов">Б</th>
-              <th title="количество званий 'Лучший игрок'">Л</th>
-              <th title="общее количество побед">П</th>
-              <th title="количество игр шерифом">Ш</th>
-              <th title="количество игр доном">Д</th>
-              <th title="количество игр мафией">М</th>
-              <th title="Убийств в первую ночь">У</th>
-              <th title="количество лучших ходов (2 или 3 чёрных)">ЛХ</th>
-              <th title="количество штрафов, каждый штраф -0,5">Шт</th>
-            </tr>
-            </thead>
-            <% @result_array.each_with_index do |player, index| %>
-                <tbody style="<%= 'background-color: #FFD700;' if (index == 0 || index == 1) %>" class="<%= 'player-rating-background' if (index == 2 || index == 3 || index == 4) %>">
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= player[:nick] %></td>
-                  <td><%= print_points_without_zero(player[:rating].round(2)) %></td>
-                  <td><%= player[:best_count] %></td>
-                  <td><%= player[:victories] %></td>
-                  <td><%= player[:sheriff_count] %></td>
-                  <td><%= player[:don_count] %></td>
-                  <td><%= player[:mafia_count] %></td>
-                  <td><%= player[:killed_first_night] %></td>
-                  <td><%= player[:best_moves] %></td>
-                  <td><%= player[:penalty_amount] %></td>
-                <tr>
-                </tbody>
-            <% end %>
-          </table>
+      <% else %>
+          <h4> Результаты временно скрыты </h4>
       <% end %>
       <%= image_tag ('tour1_image.jpg'), class: 'center-block' if params[:id] == '1' %>
       <%= image_tag ('tour2_image.jpg'), class: 'center-block' if params[:id] == '2' %>
