@@ -3,7 +3,7 @@
     <div class="col-md-2">
       <h3><strong>Участники</strong></h3>
       <% @list_of_players.each do |nick| %>
-          <label><%= nick %></label></br>
+          <label><%= nick.gsub('_', ' ') %></label></br>
       <% end %>
     </div>
     <div class="col-md-2">
@@ -70,6 +70,7 @@
       <% end %>
       <%= image_tag ('tour1_image.jpg'), class: 'center-block' if params[:id] == '1' %>
       <%= image_tag ('tour2_image.jpg'), class: 'center-block' if params[:id] == '2' %>
+      <%= image_tag ('tour3_image.jpg'), class: 'center-block' if params[:id] == '3' %>
     </div>
   </div>
 </div>
