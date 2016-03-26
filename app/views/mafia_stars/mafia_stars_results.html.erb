@@ -24,10 +24,12 @@
     </div>
     <div class="col-md-8">
       <h3><strong>Рейтинг <%= @tour.name %></strong></h3>
-      <% if current_user.present? %>
-          <% if @result_array.empty? %>
-              <h4> Серия еще не началась </h4>
-              <!--<h4>Результаты пока недоступны</h4>-->
+      <% if @result_array.empty? %>
+          <h4> Серия еще не началась </h4>
+          <!--<h4>Результаты пока недоступны</h4>-->
+      <% else %>
+          <% if !current_user.present? && params[:id] == '3' %>
+              <h4> Результаты временно недоступны </h4>
           <% else %>
               <% if @hard_card == 'отсутствует' %>
                   <label><%= @hard_card %> </label>
@@ -68,9 +70,8 @@
                     </tbody>
                 <% end %>
               </table>
+
           <% end %>
-      <% else %>
-          <h4> Результаты временно скрыты </h4>
       <% end %>
       <%= image_tag ('tour1_image.jpg'), class: 'center-block' if params[:id] == '1' %>
       <%= image_tag ('tour2_image.jpg'), class: 'center-block' if params[:id] == '2' %>
