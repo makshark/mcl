@@ -8,19 +8,21 @@
     </div>
     <div class="col-md-2">
       <h3><strong>Игры</strong></h3>
-
-      <div class="col-md-1">
-        <% @games[0..9].each_with_index do |game, index| %>
-            <label><%= link_to '№' + (index + 1).to_s, "/show_game/#{game.id}/?tournament=ms" %></label></br>
-        <% end %>
-      </div>
-      <% if @games.count >= 11 %>
+      <% if !current_admin.present? && params[:id] == '3' %>
+          <% else %>
           <div class="col-md-1">
-            <% @games[10..50].each_with_index do |game, index| %>
-                <label><%= link_to '№' + (index + 11).to_s, "/show_game/#{game.id}/?tournament=ms" %></label></br>
+            <% @games[0..9].each_with_index do |game, index| %>
+                <label><%= link_to '№' + (index + 1).to_s, "/show_game/#{game.id}/?tournament=ms" %></label></br>
             <% end %>
+          </div>
+          <% if @games.count >= 11 %>
+              <div class="col-md-1">
+                <% @games[10..50].each_with_index do |game, index| %>
+                    <label><%= link_to '№' + (index + 11).to_s, "/show_game/#{game.id}/?tournament=ms" %></label></br>
+                <% end %>
+          <% end %>
+          </div>
       <% end %>
-      </div>
     </div>
     <div class="col-md-8">
       <h3><strong>Рейтинг <%= @tour.name %></strong></h3>
