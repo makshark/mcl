@@ -28,7 +28,7 @@
           <h4> Серия еще не началась </h4>
           <!--<h4>Результаты пока недоступны</h4>-->
       <% else %>
-          <% if !current_user.present? && params[:id] == '3' %>
+          <% if !current_admin.present? && params[:id] == '3' %>
               <h4> Результаты временно недоступны </h4>
           <% else %>
               <% if @hard_card == 'отсутствует' %>
