@@ -61,6 +61,7 @@ class MafiaStarsController < ApplicationController
       # узнаем сложную карту
       if (games_city_victories - games_mafia_victories == 0) || games_city_victories == 0 || games_mafia_victories == 0
         @hard_card = 'отсутствует'
+        object[:rating] += object[:penalty_amount] * (-0.5)
       else #TODO: коеф считается каждый раз в цикле - это бредятина
         if games_city_victories > games_mafia_victories
           @additional_coefficient = (games_city_victories - games_mafia_victories).to_f / 2.0 * 0.1
