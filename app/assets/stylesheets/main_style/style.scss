@@ -174,7 +174,7 @@ h3.subtitle{
 /****************breadcrumbs*********************************************/
 .page-tree-bg,
 .page-tree-bg2 {
-  background-image: url("../img/bread-bg.png");
+  //background-image: url("../img/bread-bg.png");
   background-position: center 688px;
   background-color: $skincolor;
   padding: 40px 0;
@@ -185,7 +185,7 @@ h3.subtitle{
   margin-bottom: 0px;
 }
 .page-tree-bg2{
-    background-image: url("../assets/img/bread-bg.png");
+    //background-image: url("../assets/img/bread-bg.png");
 }
 h3.page-tree-text{
   text-align: center;
@@ -592,7 +592,7 @@ a.carousel-control i{
     border-top: 4px solid $skincolor;
   }
   body.boxed{
-    background: url("../img/bread-bg.png") repeat;
+    //background: url("../img/bread-bg.png") repeat;
 }
 }
 .boxed-wrapper .navbar-default.sticky{
