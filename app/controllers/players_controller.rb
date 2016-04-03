@@ -26,7 +26,7 @@ class PlayersController < ApplicationController
       # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
       object[:penalty_amount] = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).sum(:penalty_amount)
       # 0.25 - это дополнительный коефициент за колличество игр
-      rating = ((player[1]  / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
+      rating = ((player[1] / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
       object[:game_count] = game_count
       object[:nick] = nick.try(:nick)
       object[:rating] = rating
@@ -37,15 +37,24 @@ class PlayersController < ApplicationController
     # Получаем колличество игр, которые необходимо сыгать для рейтинга
     game_count = (Game.where(big_tournament_tour_id: nil).count.to_f / 100) * 25
     position = 1
+    # В будущем вынести это в настройки к каждому игроку!!!!!
+    banned_nicks = ['Клайд']
+    # Чёрный список (временное очень быстрое решение, в будущем переделать!)
+    # Так же в это алгоритме используется пересчет мест
     @result_array.each do |player|
-      # Отыграл 25 процентов игр, или нет
-      if player[:game_count] > game_count
-        player[:position] = position
-        position += 1
+      if banned_nicks.include?(player[:nick])
+        player[:position] = 'banned'
       else
-        player[:position] = ''
+        # Отыграл 25 процентов игр, или нет
+        if player[:game_count] > game_count
+          player[:position] = position
+          position += 1
+        else
+          player[:position] = ''
+        end
       end
     end
+
   end
 
   # GET /players
