@@ -14,6 +14,7 @@
       <% if current_admin.present? %>
           <a href="<%= add_game_path(tournament: 'ms') %>">Добавить результаты игры</a></br>
           <a href="<%= new_big_tournament_tour_path %>">Добавить новый тур</a></br>
+          <a href="<%= big_tournament_tours_path %>">Упрвление турами</a></br>
       <% end %>
       <% @tours.each do |tour| %>
           <a href="<%= mafia_stars_results_path(id: tour.id) %>"> <%= tour.name %></a></br>

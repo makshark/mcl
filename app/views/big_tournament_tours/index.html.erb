@@ -1,6 +1,6 @@
 <div class="container">
   <div class="raw">
-    <div class="col-md-6">
+    <div class="col-md-7">
       <p id="notice"><%= notice %></p>
 
       <h1>Список туров туниров</h1>
@@ -19,8 +19,8 @@
             <tr>
               <td><%= big_tournament_tour.name %></td>
               <td><%= big_tournament_tour.big_tournament.name %></td>
-              <td><%= link_to 'Edit', edit_big_tournament_tour_path(big_tournament_tour) %></td>
-              <td><%= link_to 'Destroy', big_tournament_tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Изменить', edit_big_tournament_tour_path(big_tournament_tour) %></td>
+              <td><%= link_to 'Удалить', big_tournament_tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
         <% end %>
         </tbody>

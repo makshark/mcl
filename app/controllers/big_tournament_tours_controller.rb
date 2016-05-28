@@ -69,6 +69,6 @@ class BigTournamentToursController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def big_tournament_tour_params
-      params.require(:big_tournament_tour).permit(:name, :big_tournament_id, :list_of_players)
+      params.require(:big_tournament_tour).permit(:name, :big_tournament_id, :list_of_players, :public)
     end
 end

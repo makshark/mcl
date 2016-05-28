@@ -22,6 +22,10 @@
       <%= f.label 'Игроки(*введите через пробел 10 ников)' %>
       <%= f.text_area :list_of_players, class: 'form-control' %>
     </div>
+    <div class="form-group">
+      <%= f.label 'Все видят?' %>
+      <%= f.select :public, [['Да', true], ['Нет', false]], { include_blank: false },  class: 'form-control' %>
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>
