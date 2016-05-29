@@ -6,7 +6,7 @@ class GamePlayer < ActiveRecord::Base
   after_create :calculate_points
   belongs_to :game
   belongs_to :player
-  enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
+  enum role: {mafia: 0, citizen: 1, don: 2, sheriff: 3}
 
 
   def self.normalize_role(role)
@@ -38,13 +38,19 @@ class GamePlayer < ActiveRecord::Base
           if self.win?
             points_sum += 2
           else
-            self.killed_first? ? points_sum += 0.5 : points_sum += 0
+            #TODO: харкдод не учитывания +0,5 первоубиенном в финале mafiastars
+            unless self.game.big_tournament_tour_id == 5
+              self.killed_first? ? points_sum += 0.5 : points_sum += 0
+            end
           end
         when 'citizen'
           if self.win?
             points_sum += 2
           else
-            self.killed_first? ? points_sum += 0.5 : points_sum += 0
+            #TODO: харкдод не учитывания +0,5 первоубиенном в финале mafiastars
+            unless self.game.big_tournament_tour_id == 5
+              self.killed_first? ? points_sum += 0.5 : points_sum += 0
+            end
           end
       end
 
