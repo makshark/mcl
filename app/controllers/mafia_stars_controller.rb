@@ -2,7 +2,8 @@ class MafiaStarsController < ApplicationController
   # TODO: обязательно удалить этот контоллер и предлать все в нормальую структуру
 
   def index
-    @tours = BigTournamentTour.all
+    # hardcoded for mafiastars
+    @tours = BigTournamentTour.where(big_tournament_id: 1).order(:created_at)
   end
 
   def mafia_stars_results
