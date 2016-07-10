@@ -90,7 +90,7 @@ class MafiaStarsController < ApplicationController
     @total_victory_mafia = Game.where(big_tournament_tour_id: params[:id], victory: 1).count
 
     @final_team = []
-    if @tour.big_tournament.mode == :double
+    if @tour.big_tournament.mode == 'double'
       # Роздел подсчета командноо рейтинга, если таков имеется
       # Нужно как-то сгруппирвоать ко командам
       @team_result_array = @result_array
