@@ -79,8 +79,7 @@
       <%= image_tag ('tour4_image.jpg'), class: 'center-block', width: 604, height: 340 if params[:id] == '4' %>
       <%= image_tag ('tour5_image.jpg'), class: 'center-block', width: 604, height: 340 if params[:id] == '5' %>
     </div>
-
-    <% if @tour.big_tournament.mode == :double %>
+    <% if @tour.big_tournament.mode == 'double' %>
         <div class="col-md-4" style="text-align: center;">
           <h3><strong>Командный рейтинг</strong></h3>
           <% if public_tour?(public: @tour.public) %>
