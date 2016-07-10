@@ -23,7 +23,7 @@
           </div>
       <% end %>
     </div>
-    <div class="col-md-4" style="text-align: center;">
+    <div class="col-md-6" style="text-align: center;">
       <h3><strong>Рейтинг <%= @tour.name %></strong></h3>
       <% if public_tour?(public: @tour.public) %>
           <% if @result_array.empty? %>
@@ -80,7 +80,7 @@
       <%= image_tag ('tour5_image.jpg'), class: 'center-block', width: 604, height: 340 if params[:id] == '5' %>
     </div>
     <% if (@tour.try(:big_tournament).try(:mode) == 'double') %>
-        <div class="col-md-4" style="text-align: center;">
+        <div class="col-md-6" style="text-align: center;">
           <h3><strong>Командный рейтинг</strong></h3>
           <% if public_tour?(public: @tour.public) %>
               <% if @result_array.empty? %>
