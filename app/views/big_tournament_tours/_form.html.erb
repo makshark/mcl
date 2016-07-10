@@ -24,7 +24,7 @@
       <%= f.text_area :list_of_players, class: 'form-control' %>
     </div>
     <!--TODO: специальная страница для связывания команд игроков, если турнир не одиночный-->
-    <% unless @big_tournament_tour.big_tournament.mode == :single %>
+    <% unless @big_tournament_tour.try(:big_tournament).try(:mode) == :single %>
         <%= link_to 'Связать игроков в команды', tournament_players_teams_path %>
     <% end %>
     <!--TODO: в будущем разобраться с модом (когда будет нормальная админка)-->
