@@ -6,7 +6,7 @@ class GamePlayer < ActiveRecord::Base
   after_create :calculate_points
   belongs_to :game
   belongs_to :player
-  enum role: {mafia: 0, citizen: 1, don: 2, sheriff: 3}
+  enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
 
 
   def self.normalize_role(role)
@@ -122,7 +122,7 @@ class GamePlayer < ActiveRecord::Base
       BestGameMove.where(game_id: self.game_id).each do |move|
         if move.player_id
           game_player = GamePlayer.where(game_id: self.game_id, player_id: move.player_id).first
-          if game_player.role == 'don' || game_player.role == 'mafia'
+          if game_player.try(:role) == 'don' || game_player.try(:role) == 'mafia'
             best_move_count += 1
           end
         end
