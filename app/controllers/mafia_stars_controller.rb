@@ -108,6 +108,7 @@ class MafiaStarsController < ApplicationController
           end
         end
       end
+      @final_team = @final_team.sort_by { |hsh| hsh[:rating] }.reverse!
     end
   end
 end
