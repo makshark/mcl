@@ -134,49 +134,9 @@
   <div class="space-10"></div>
   <div class="row">
     <div class="col-md-6">
-      <h4 class="heading-mini">Круги</h4>
 
       <!--tabs start-->
-      <div class="tabs">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#mm1" data-toggle="tab">Круг 0</a></li>
-          <li class=""><a href="#mm2" data-toggle="tab">Круг 1</a></li>
-          <li class=""><a href="#mm3" data-toggle="tab">Круг 2</a></li>
-          <li class=""><a href="#mm4" data-toggle="tab">Круг 3</a></li>
-          <li class=""><a href="#mm5" data-toggle="tab">Круг 4</a></li>
-          <li class=""><a href="#mm6" data-toggle="tab">Круг 5</a></li>
-        </ul>
-        <!--TODO: добавить возможность сохранений на кругах-->
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <% (1..6).each do |circle| %>
-              <div class="tab-pane <%= 'active' if circle == 1 %>" id="mm<%= circle %>">
-                <div class="tab-desc animated fadeInDown">
 
-                  <p>
-                  <table class="table table-condensed table-bordered table-hover">
-                    <thead>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    </thead>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-
-                  </table>
-                  </p>
-
-                </div>
-
-              </div>
-          <% end %>
-        </div>
-      </div>
 
       <!--tabs end-->
     </div>

@@ -1,0 +1,28 @@
+<%= form_for(@tournament_players_team) do |f| %>
+  <% if @tournament_players_team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tournament_players_team.errors.count, "error") %> prohibited this tournament_players_team from being saved:</h2>
+
+      <ul>
+      <% @tournament_players_team.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="form-group">
+      <%= f.label 'Имя команды' %>
+      <%= f.select :tournament_players_team_name_id, TournamentPlayersTeamName.all.collect { |p| [p.name, p.id] }, {include_blank: false}, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Ник' %>
+      <%= f.select :player_id, Player.all.collect { |p| [p.nick, p.id] }, {include_blank: false}, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Турнир' %>
+      <%= f.select :big_tournament_tour_id, BigTournamentTour.joins(:big_tournament).where(big_tournaments: { mode: 1 }).collect { |p| [p.name, p.id] }, {include_blank: false}, class: 'form-control' %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

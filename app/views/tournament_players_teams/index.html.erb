@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="raw">
+    <div class="col-md-7">
+      <p id="notice"><%= notice %></p>
+
+      <h1>Связать команду и игрока</h1>
+
+      <table class="table table-condensed table-bordered table-hover table-nonfluid">
+        <thead>
+        <tr>
+          <th>Имя команды</th>
+          <th>Ник игрока</th>
+          <th>Турнир</th>
+          <th colspan="3"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @tournament_players_teams.each do |tournament_players_team| %>
+            <tr>
+              <td><%= tournament_players_team.try(:tournament_players_team_name).try(:name) %></td>
+              <td><%= tournament_players_team.try(:player).try(:nick) %></td>
+              <td><%= tournament_players_team.try(:big_tournament_tour).try(:name) %></td>
+              <td><%= link_to 'Изменить', edit_tournament_players_team_path(tournament_players_team) %></td>
+              <td><%= link_to 'Удалить', tournament_players_team, method: :delete, data: {confirm: 'Вы уверены? Лучше этого не делать, если турнир уже начался'} %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%= link_to 'Создать', new_tournament_players_team_path %>
+    </div>
+  </div>
+</div>

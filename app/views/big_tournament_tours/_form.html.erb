@@ -1,32 +1,53 @@
 <%= form_for(@big_tournament_tour) do |f| %>
-  <% if @big_tournament_tour.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@big_tournament_tour.errors.count, "error") %> prohibited this big_tournament_tour from being saved:</h2>
+    <% if @big_tournament_tour.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@big_tournament_tour.errors.count, "error") %> prohibited this big_tournament_tour from
+            being saved:</h2>
 
-      <ul>
-      <% @big_tournament_tour.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% @big_tournament_tour.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
     <div class="form-group">
       <%= f.label 'Название' %>
       <%= f.text_field :name, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= f.label 'Турнир' %>
-      <%= f.select :big_tournament_id, BigTournament.all.collect {|p| [p.name, p.id] }, { include_blank: false },  class: 'form-control' %>
+      <%= f.select :big_tournament_id, BigTournament.all.collect { |p| [p.name, p.id] }, {include_blank: false}, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= f.label 'Игроки(*введите через пробел 10 ников)' %>
       <%= f.text_area :list_of_players, class: 'form-control' %>
     </div>
+    <!--TODO: специальная страница для связывания команд игроков, если турнир не одиночный-->
+    <% unless @big_tournament_tour.big_tournament.mode == :single %>
+        <%= link_to 'Связать игроков в команды', tournament_players_teams_path %>
+    <% end %>
+    <!--TODO: в будущем разобраться с модом (когда будет нормальная админка)-->
     <div class="form-group">
       <%= f.label 'Все видят?' %>
-      <%= f.select :public, [['Да', true], ['Нет', false]], { include_blank: false },  class: 'form-control' %>
+      <%= f.select :public, [['Да', true], ['Нет', false]], {include_blank: false}, class: 'form-control' %>
     </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="form-group">
+      <%= f.label 'Жребий в данном типе турнира?' %>
+      <%= f.select :fate, [['Да', true], ['Нет', false]], {include_blank: false}, class: 'form-control' %>
+      <% if @big_tournament_tour.fate %>
+        <%= link_to 'Сгенерировать рассадку', generate_big_tournament_tour_fate_path(big_tournament_tour_id: @big_tournament_tour.id), method: :post %>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Количество туров' %>
+      <%= f.text_field :tour_amount, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Количество столов' %>
+      <%= f.text_field :table_amount, class: 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

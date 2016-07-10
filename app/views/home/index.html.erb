@@ -19,7 +19,6 @@
       <div class="form-group">
         <label for="leading">Ведущий:</label>
         <select class="form-control selectpicker" id="leading_id" data-live-search="true" style="width: 100%;">
-          <option disabled selected>
         </select>
       </div>
     </div>
@@ -61,7 +60,7 @@
             <select class="form-control" id="bigTournamentId" style="width: 100%;">
               <option selected>
                 <% @mafia_stars_tours.each do |big_tournament| %>
-                  <option value="<%= big_tournament.id %>"><%= big_tournament.name %>
+                  <option <%= 'selected' if params[:big_tournament_tour_id].to_i == big_tournament.id %> value="<%= big_tournament.id %>"><%= big_tournament.name %>
               <% end %>
             </select>
         <% end %>
@@ -78,12 +77,12 @@
           <th>Роль</th>
           <th>Замечания</th>
           <% if params[:tournament] == 'ms' %>
-            <th>ЛИ1</th>
-            <th>ЛИ2</th>
-            <th>ЛИ3</th>
+              <th>ЛИ1</th>
+              <th>ЛИ2</th>
+              <th>ЛИ3</th>
           <% else %>
-            <th>ЛИС</th>
-            <th>ЛИВ</th>
+              <th>ЛИС</th>
+              <th>ЛИВ</th>
           <% end %>
           <th>Убитый</th>
           <th>Штраф</th>
@@ -95,7 +94,11 @@
               <td><%= id %></td>
               <td>
                 <select class="form-control selectpicker" id="playerNickName<%= id %>" data-live-search="true" style="width: 100%;">
-                  <option disabled selected>
+                  <% if params[:previous_selected_players].present? %>
+                      <option value="<%= params[:previous_selected_players][id-1] %>"><%= Player.where(id: params[:previous_selected_players][id-1]).first.nick %></option>
+                  <% else %>
+                      <option disabled selected>
+                  <% end %>
                 </select>
               </td>
               <td>
@@ -130,6 +133,8 @@
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
                 </select>
               </td>
             <tr>
@@ -163,18 +168,15 @@
                   <p>
                   <table class="table table-condensed table-bordered table-hover">
                     <thead>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <% 7.times do %>
+                        <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <% end %>
                     </thead>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-                    <td><input class="col-sm-2 form-control" type="text" id=""></td>
-
+                    <tbody>
+                    <% 7.times do %>
+                        <td><input class="col-sm-2 form-control" type="text" id=""></td>
+                    <% end %>
+                    </tbody>
                   </table>
                   </p>
 

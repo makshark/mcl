@@ -2,8 +2,8 @@ class MafiaStarsController < ApplicationController
   # TODO: обязательно удалить этот контоллер и предлать все в нормальую структуру
 
   def index
-    # hardcoded for mafiastars
-    @tours = BigTournamentTour.where(big_tournament_id: 1).order(:created_at)
+    # List of all big tournaments tours
+    @tours = BigTournamentTour.all.order(:created_at)
   end
 
   def mafia_stars_results
@@ -54,6 +54,7 @@ class MafiaStarsController < ApplicationController
       object[:mafia_count] = mafia_count
       object[:killed_first_night] = killed_first_night
       object[:best_moves] = best_moves
+      object[:player_id] = nick.try(:id)
 
       # Роздел подсчета сложной карты
       game_count = Game.where(big_tournament_tour_id: @tour.id).count
@@ -87,7 +88,24 @@ class MafiaStarsController < ApplicationController
     # TODO: разобраться, почему не работает, когда обращаюь через mafia, city (в поле victory)
     @total_victory_citizen = Game.where(big_tournament_tour_id: params[:id], victory: 0).count
     @total_victory_mafia = Game.where(big_tournament_tour_id: params[:id], victory: 1).count
+
+    # Роздел подсчета командноо рейтинга, если таков имеется
+    # Нужно как-то сгруппирвоать ко командам
+    @team_result_array = @result_array
+    @team_result_array.each do |player|
+      team = TournamentPlayersTeam.where(big_tournament_tour_id: @tour.id, player_id: player[:player_id]).first
+      player[:tournament_players_team_name_id] = team.try(:tournament_players_team_name_id)
+    end
+    @final_team = []
+    @total_group = @team_result_array.group_by { |d| d[:tournament_players_team_name_id] }
+    @total_group.each do |e|
+      @final_team << e[1].first.merge(e[1].last) do |_, h1, h2|
+        if h1.class == String
+          h1 == h2 ? h1 : h1 + ' ' + h2
+        else
+          h1 + h2
+        end
+      end
+    end
   end
-
-
 end

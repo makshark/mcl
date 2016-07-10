@@ -1,0 +1,35 @@
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <div class="raw">
+    <div class="col-md-12">
+      <% @fates.each_slice(@big_tournament_tour.table_amount * 10) do |tour| %>
+          <h3> Тур <%= tour[0].tour %> </h3>
+          <% tour.each_slice(10) do |players| %>
+              <div class="col-md-3">
+                <h5>Стол <%= players[0].table %>
+                  <% if current_admin.present? %>
+                      <a href="<%= add_game_path(tournament: 'ms', previous_selected_players: players.map { |p| p.player_id }, big_tournament_tour_id: params[:id]) %>">Провести
+                        игру</a>
+                  <% end %>
+                </h5>
+                <table class="table table-condensed table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Ник</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% players.each do |player| %>
+                      <tr>
+                        <td><%= player.place %></td>
+                        <td><%= player.player.nick %></td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
