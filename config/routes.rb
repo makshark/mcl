@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   get '/mafia_stars', to: 'mafia_stars#index', as: :mafia_stars
   get '/mafia_stars_results/:id', to: 'mafia_stars#mafia_stars_results', as: :mafia_stars_results
+  get '/mclcup16/:id', to: 'mafia_stars#mafia_stars_results', as: :mcl_cup
   post :generate_big_tournament_tour_fate, to: 'fates#generate_big_tournament_tour_fate'
   get 'fates/:id', to: 'fates#show', as: :fates
 end

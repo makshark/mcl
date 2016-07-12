@@ -7,6 +7,8 @@ class MafiaStarsController < ApplicationController
   end
 
   def mafia_stars_results
+    # TODO: просто нереальный хардкод
+    # params[:id] ||= 7
     @tour = BigTournamentTour.where(id: params[:id]).first
     # Если нету игроков, выводить сообщение тур еще не сыгран
     @list_of_players = @tour.try(:list_of_players)

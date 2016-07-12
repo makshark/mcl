@@ -17,7 +17,11 @@
           <a href="<%= big_tournament_tours_path %>">Упрвление турами</a></br>
       <% end %>
       <% @tours.each do |tour| %>
-          <a href="<%= mafia_stars_results_path(id: tour.id) %>"> <%= tour.name %></a></br>
+          <% if tour.id == 7 %>
+              <a href="<%= mcl_cup_path(id: tour.id) %>"> <%= tour.name %></a></br>
+          <% else %>
+              <a href="<%= mafia_stars_results_path(id: tour.id) %>"> <%= tour.name %></a></br>
+          <% end %>
       <% end %>
     </div>
   </div>
