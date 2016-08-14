@@ -92,25 +92,25 @@ class MafiaStarsController < ApplicationController
     @total_victory_mafia = Game.where(big_tournament_tour_id: params[:id], victory: 1).count
 
     @final_team = []
-    # if @tour.big_tournament.mode == 'double'
-    #   # Роздел подсчета командноо рейтинга, если таков имеется
-    #   # Нужно как-то сгруппирвоать ко командам
-    #   @team_result_array = @result_array
-    #   @team_result_array.each do |player|
-    #     team = TournamentPlayersTeam.where(big_tournament_tour_id: @tour.id, player_id: player[:player_id]).first
-    #     player[:tournament_players_team_name_id] = team.try(:tournament_players_team_name_id)
-    #   end
-    #   @total_group = @team_result_array.group_by { |d| d[:tournament_players_team_name_id] }
-    #   @total_group.each do |e|
-    #     @final_team << e[1].first.merge(e[1].last) do |_, h1, h2|
-    #       if h1.class == String
-    #         h1 == h2 ? h1 : h1 + ' ' + h2
-    #       else
-    #         h1 + h2
-    #       end
-    #     end
-    #   end
-    #   @final_team = @final_team.sort_by { |hsh| hsh[:rating] }.reverse!
-    # end
+    if @tour.big_tournament.mode == 'double'
+      # Роздел подсчета командноо рейтинга, если таков имеется
+      # Нужно как-то сгруппирвоать ко командам
+      @team_result_array = @result_array
+      @team_result_array.each do |player|
+        team = TournamentPlayersTeam.where(big_tournament_tour_id: @tour.id, player_id: player[:player_id]).first
+        player[:tournament_players_team_name_id] = team.try(:tournament_players_team_name_id)
+      end
+      @total_group = @team_result_array.group_by { |d| d[:tournament_players_team_name_id] }
+      @total_group.each do |e|
+        @final_team << e[1].first.merge(e[1].last) do |_, h1, h2|
+          if h1.class == String
+            h1 == h2 ? h1 : h1 + ' ' + h2
+          else
+            h1 + h2
+          end
+        end
+      end
+      @final_team = @final_team.sort_by { |hsh| hsh[:rating] }.reverse!
+    end
   end
 end

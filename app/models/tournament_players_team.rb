@@ -13,3 +13,4 @@ end
 # end
 # TournamentPlayersTeamName.destroy_all
 # 20.times {|x| TournamentPlayersTeamName.create(name: "Team#{x}")}
+# 10.times {|x| TournamentPlayersTeamName.create(name: "MarafonTeam#{x}")}
