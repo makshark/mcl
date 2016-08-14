@@ -78,7 +78,7 @@ class MafiaStarsController < ApplicationController
           player_win_mafia = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 1 AND (game_players.role = 0 OR game_players.role = 2) AND game_players.player_id = (?)', @tour.id, player[0]).count
           # Fix для другой формулы пересчета рейтинга в зависимости от сложной карты
           if @tour.id >= 9
-            object[:rating] += (@additional_coefficient * 2) * player_win_mafia - player_win_mafia * 2
+            object[:rating] += (@additional_coefficient * 2) * player_win_mafia
           else
             object[:rating] += @additional_coefficient * player_win_mafia + (object[:penalty_amount] * (-0.5))
           end
@@ -88,7 +88,8 @@ class MafiaStarsController < ApplicationController
           # Получаем колличество игр выигранных игроком за мирных
           player_win_citizen = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND games.victory = 0 AND (game_players.role = 1 OR game_players.role = 3) AND game_players.player_id = (?)', @tour.id, player[0]).count
           if @tour.id >= 9
-            object[:rating] += (@additional_coefficient * 2) * player_win_citizen - player_win_citizen * 2
+            object[:rating] += (@additional_coefficient * 2) * player_win_citizen
+            3/0
           else
             object[:rating] += @additional_coefficient * player_win_citizen + (object[:penalty_amount] * (-0.5))
           end
