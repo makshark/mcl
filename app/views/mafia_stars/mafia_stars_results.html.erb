@@ -41,6 +41,7 @@
                   <th>№</th>
                   <th>Ник</th>
                   <th title="общая сумма набранных балов">Б</th>
+                  <th title="количество сыгранных игр">И</th>
                   <th title="количество званий 'Лучший игрок'">Л</th>
                   <th title="общее количество побед">П</th>
                   <th title="количество игр шерифом">Ш</th>
@@ -57,6 +58,7 @@
                       <td><%= index + 1 %></td>
                       <td><%= player[:nick] %></td>
                       <td><%= print_points_without_zero(player[:rating].round(2)) %></td>
+                      <td><%= player[:citizen_count] + player[:mafia_count] + player[:sheriff_count] + player[:don_count] %></td>
                       <td><%= player[:best_count] %></td>
                       <td><%= player[:victories] %></td>
                       <td><%= player[:sheriff_count] %></td>

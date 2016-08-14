@@ -42,6 +42,9 @@ class MafiaStarsController < ApplicationController
       # Сыграл доном (мафия - 0)
       mafia_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?) AND game_players.role = 0', @tour.id, player[0]).count
       ######
+      # Сыграл мирным (мирный - 1)
+      citizen_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?) AND game_players.role = 1', @tour.id, player[0]).count
+      ######
       # Убит в 1 ночь
       killed_first_night = GamePlayer.joins(:game).where('games.big_tournament_tour_id = (?) AND game_players.player_id = (?) AND games.killed_first_id = ?', @tour.id, player[0], player[0]).count
       #######
@@ -54,6 +57,7 @@ class MafiaStarsController < ApplicationController
       object[:sheriff_count] = sheriff_count
       object[:don_count] = don_count
       object[:mafia_count] = mafia_count
+      object[:citizen_count] = citizen_count
       object[:killed_first_night] = killed_first_night
       object[:best_moves] = best_moves
       object[:player_id] = nick.try(:id)
