@@ -6,7 +6,7 @@ class GamePlayer < ActiveRecord::Base
   after_create :calculate_points
   belongs_to :game
   belongs_to :player
-  enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
+  enum role: {mafia: 0, citizen: 1, don: 2, sheriff: 3}
 
 
   def self.normalize_role(role)
@@ -129,12 +129,23 @@ class GamePlayer < ActiveRecord::Base
       end
       if self.game.big_tournament_tour_id.present?
         # TODO: выбор шерифа или мирного и присваивание ему очков
-        if role == 'sheriff'
-          return 0 if best_move_count == 2
-          return 0.25 if best_move_count == 3
-        elsif role == 'citizen'
-          return 0.25 if best_move_count == 2
-          return 0.5 if best_move_count == 3
+        mcl_tours = [10] # захрадкоженные туры big_tournament_tour_id для которых не нужно считать у первоубиенного лучший ход если выиграли мирные
+        if (self.game.big_tournament_tour_id == 10 && self.game.mafia? )
+          if role == 'sheriff'
+            return 0 if best_move_count == 2
+            return 0.25 if best_move_count == 3
+          elsif role == 'citizen'
+            return 0.25 if best_move_count == 2
+            return 0.5 if best_move_count == 3
+          end
+        elsif (self.game.big_tournament_tour_id != 10)
+          if role == 'sheriff'
+            return 0 if best_move_count == 2
+            return 0.25 if best_move_count == 3
+          elsif role == 'citizen'
+            return 0.25 if best_move_count == 2
+            return 0.5 if best_move_count == 3
+          end
         end
         0
       else
