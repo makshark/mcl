@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
+  resources :points_settings
   devise_for :admins
   root 'home#main_page'
   resources :players
   resources :mini_tournaments
   resources :big_tournament_tours
   resources :tournament_players_teams
+  resources :seasons
   post '/list_of_players', to: 'players#list_of_players'
   post '/list_of_leadings', to: 'players#list_of_leadings'
   post '/create_game', to: 'games#create_game'

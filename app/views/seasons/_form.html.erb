@@ -1,0 +1,24 @@
+<%= form_for(@season) do |f| %>
+  <% if @season.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@season.errors.count, "error") %> prohibited this season from being saved:</h2>
+
+      <ul>
+      <% @season.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="form-group">
+      <%= f.label 'Название' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Номер следующей игры' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

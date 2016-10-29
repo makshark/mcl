@@ -1,0 +1,39 @@
+<div class="space-10"></div>
+<section id="content-region-3" class="padding-40 page-tree-bg">
+  <div class="container">
+    <h3 class="page-tree-text-small">
+      <%= @season.name %>
+    </h3>
+  </div>
+</section><!--page-tree end here-->
+
+<div class="container">
+  <div class="raw">
+    <div class="cold-md-12">
+      <div class="space-10"></div>
+      <table class="table table-condensed table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Ник</th>
+          <th>Коэффициент</th>
+          <th>Количество игр</th>
+          <th>Штрафы</th>
+        </tr>
+        </thead>
+        <% [].each do |player| %>
+            <% next if player[:position] == 'banned' %>
+            <tbody class="<%= 'player-rating-background' if player[:position] != '' %>">
+            <tr>
+              <td><%= player[:position] %></td>
+              <td><%= player[:nick] %></td>
+              <td><%= player[:rating].round %></td>
+              <td><%= player[:game_count] %></td>
+              <td><%= player[:penalty_amount] %></td>
+            <tr>
+            </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

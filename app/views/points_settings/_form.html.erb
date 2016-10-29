@@ -1,0 +1,17 @@
+<%= form_for(@points_setting) do |f| %>
+  <% if @points_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@points_setting.errors.count, "error") %> prohibited this points_setting from being saved:</h2>
+
+      <ul>
+      <% @points_setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

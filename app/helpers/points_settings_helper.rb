@@ -1,0 +1,2 @@
+module PointsSettingsHelper
+end
