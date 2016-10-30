@@ -102,9 +102,9 @@ class MafiaStarsController < ApplicationController
 
     ###### Сильный хардкод, для того что бы в одной из серий mcl поменять местами 1 и 2 место (разница по лучшим)
     ## на логику приложения никак не влияет, в будущем - переделается!
-    if params[:id] == '12'
+    if params[:id] == '13'
       # меняем местами лачу и борща
-      @result_array.insert(0, @result_array.delete_at(@result_array[1]))
+      @result_array.insert(0, @result_array.delete_at(1))
     end
 
     ######
