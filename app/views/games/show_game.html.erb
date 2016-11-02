@@ -61,8 +61,10 @@
       </div>
     </div>
     <div class="col-md-1">
+      <% if current_admin.present? %>
       <label title="Если вы вносите игру студлиги просто поставтье галочку">Студлига</label>
       <input type="checkbox" name="students" id="studentsLeague" <%= 'checked' if @game.students_league %>/>
+          <% end %>
     </div>
   </div>
   <div class="raw">
