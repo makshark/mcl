@@ -11,8 +11,8 @@ class Game < ActiveRecord::Base
   belongs_to :season
   belongs_to :mini_tournament
   belongs_to :big_tournament_tour
-  after_create :increase_current_game_season_count
-  before_create :set_number
+  after_create :increase_current_game_season_count, unless: ->(g) { g.students_league }
+  before_create :set_number, unless: ->(g) { g.students_league }
   enum victory: { city: 0, mafia: 1, draw: 2 }
   scope :current_season, -> { where(big_tournament_tour: nil) } # TODO: в будущем, возможно переделать это решение
 
@@ -121,12 +121,6 @@ class Game < ActiveRecord::Base
         Player.find_by_nick(field.try(:value)) || nil
       end
     end
-  end
-  # Почистить все, потом нужно будет удалить
-  def self.clear
-    BestGameMove.destroy_all
-    Game.destroy_all
-    GamePlayer.destroy_all
   end
 
   def increase_current_game_season_count

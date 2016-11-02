@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="raw">
+    <div class="col-md-6">
+      <p id="notice"><%= notice %></p>
+      <h1>Список сезонов</h1>
+
+      <table class="table table-condensed table-bordered table-hover table-nonfluid">
+        <thead>
+        <tr>
+          <th>Имя сезона</th>
+          <th>Дата создания</th>
+          <th colspan="3"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @seasons.each do |season| %>
+            <tr>
+              <td><%= season.name %></td>
+              <td><%= season.created_at %></td>
+              <td><%= link_to 'Рейтинг', season %></td>
+              <td><%= link_to 'Изменить', edit_season_path(season) %></td>
+              <td><%= link_to 'Удалить', season, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%= link_to 'Создать новый сезон', new_season_path %>
+    </div>
+  </div>
+</div>

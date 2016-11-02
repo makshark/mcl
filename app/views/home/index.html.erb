@@ -38,13 +38,13 @@
 
         <div class='input-group date' id='datetimepicker1'>
           <input id="date" type='text' class="form-control"/>
-                    <span class="input-group-addon">
+          <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="form-group">
         <% unless params[:tournament] == 'ms' %>
             <label for="leading">Минитурнир</label>
@@ -65,6 +65,10 @@
             </select>
         <% end %>
       </div>
+    </div>
+    <div class="col-md-1">
+      <label title="Если вы вносите игру студлиги просто поставтье галочку">Студлига</label>
+      <input type="checkbox" name="students" id="studentsLeague" />
     </div>
   </div>
   <div class="raw">

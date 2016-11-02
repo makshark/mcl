@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Points Settings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @points_settings.each do |points_setting| %>
+      <tr>
+        <td><%= link_to 'Show', points_setting %></td>
+        <td><%= link_to 'Edit', edit_points_setting_path(points_setting) %></td>
+        <td><%= link_to 'Destroy', points_setting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Points setting', new_points_setting_path %>

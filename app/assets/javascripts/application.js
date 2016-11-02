@@ -202,6 +202,7 @@ $(document).ready(function () {
         var best_player_leading_id_position = $('#best_player_leading_id').parent().attr('id');
         var best_player_leading1_id_position = $('#best_player_leading1_id').parent().attr('id');
         var best_player_leading2_id_position = $('#best_player_leading2_id').parent().attr('id');
+        var students_league = $("#studentsLeague").is(':checked');
 
         if (killed_first_id_position != undefined) {
             killed_first_id_position = killed_first_id_position.replace('killedFirst', '');
@@ -266,7 +267,8 @@ $(document).ready(function () {
                     mini_tournament_id: mini_tournament_id,
                     big_tournament_tour_id: big_tournament_tour_id,
                     game_id: game_id,
-                    number: game_number
+                    number: game_number,
+                    students_league: students_league
                 },
                 dataType: 'json'
             }).done(function (response) {
