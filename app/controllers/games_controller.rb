@@ -4,8 +4,69 @@ class GamesController < ApplicationController
   # TODO: посмотреть пример с транзакциейв аутсорс пипл и сделать все это действие транзакцией
   # Список всех игр
   def index
-    @games = Game.current_season.order(number: :desc)
+    # hardcode
+    @games = Game.current_season.where(students_league: false).order(number: :desc)
   end
+
+  ####### studliga need to remove all this shit! ######
+  def studliga
+
+  end
+
+  # TODO: players rating duplicate
+  def studliga_rating
+    @result_array = []
+    object = {}
+    # TODO: очень быдловское решение, если не исправлю - будет стыдно
+    # players_points_count = GamePlayer.group(:player_id)
+    #                            .sum(:points)
+    players_points_count = GamePlayer.joins(:game).where('games.students_league = true').group(:player_id).sum(:points)
+    # players_penalty_amount = GamePlayer.group(:player_id).sum(:penalty_amount)
+    players_points_count.each do |player|
+      # game_count = GamePlayer.where(player_id: player[0]).count
+      game_count = GamePlayer.joins(:game).where('game_players.player_id = (?)', player[0]).where('games.students_league = true').count
+
+      nick = Player.where(id: player[0]).first
+      # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
+      object[:penalty_amount] = GamePlayer.joins(:game).where('game_players.player_id = (?)', player[0]).where('games.students_league = true').sum(:penalty_amount)
+      # 0.25 - это дополнительный коефициент за колличество игр
+      rating = ((player[1] / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
+      object[:game_count] = game_count
+      object[:nick] = nick.try(:nick)
+      object[:rating] = rating
+      @result_array << object
+      object = {}
+    end
+    @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
+    # Получаем колличество игр, которые необходимо сыгать для рейтинга
+    game_count = (Game.where(big_tournament_tour_id: nil).where(students_league: true).count.to_f / 100) * 20
+    position = 1
+    # В будущем вынести это в настройки к каждому игроку!!!!!
+    banned_nicks = ['Клайд']
+    # Чёрный список (временное очень быстрое решение, в будущем переделать!)
+    # Так же в это алгоритме используется пересчет мест
+    @result_array.each do |player|
+      if banned_nicks.include?(player[:nick])
+        player[:position] = 'banned'
+      else
+        # Отыграл 25 процентов игр, или нет
+        if player[:game_count] > game_count
+          player[:position] = position
+          position += 1
+        else
+          player[:position] = ''
+        end
+      end
+    end
+    render template: 'players/players_rating'
+  end
+
+  def studliga_games
+    # hardcode
+    @games = Game.where(students_league: true).order(number: :desc)
+    render action: 'index'
+  end
+  ############# end ##########################
 
   def show_game
     @game = Game.find(params[:id])
@@ -24,11 +85,12 @@ class GamesController < ApplicationController
   end
 
   def create_game
+    students_league = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:students_league])
     # Создаем игру со всеми ее параметрами
     # TODO: создать для каждой лиги настройки, в которых будет храниться игра (что бы понимать номер)
     if params[:game_id].present?
       game = Game.where(id: params[:game_id]).first
-      game.update(game_params)
+      game.update(game_params.merge(students_league: students_league))
       # Создание игроков игры
       if params[:game_players].present?
         GamePlayer.where(game_id: game.id).destroy_all
@@ -43,7 +105,7 @@ class GamesController < ApplicationController
         end
       end
     else
-      if game = Game.create(game_params)
+      if game = Game.create(game_params.merge(students_league: students_league))
         if params[:best_game_move].present?
           params[:best_game_move].each do |best_game_move|
             BestGameMove.create(game_id: game.id, player_id: best_game_move)

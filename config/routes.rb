@@ -22,4 +22,10 @@ Rails.application.routes.draw do
   get '/mclcup16/:id', to: 'mafia_stars#mafia_stars_results', as: :mcl_cup
   post :generate_big_tournament_tour_fate, to: 'fates#generate_big_tournament_tour_fate'
   get 'fates/:id', to: 'fates#show', as: :fates
+
+  # students league hardcode
+  get :studliga, to: 'games#studliga'
+  get :studliga_games, to: 'games#studliga_games'
+  get :studliga_rating, to: 'games#studliga_rating'
+
 end

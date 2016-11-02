@@ -16,15 +16,15 @@ class PlayersController < ApplicationController
     # TODO: очень быдловское решение, если не исправлю - будет стыдно
     # players_points_count = GamePlayer.group(:player_id)
     #                            .sum(:points)
-    players_points_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL').group(:player_id).sum(:points)
+    players_points_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL').where('games.students_league = false').group(:player_id).sum(:points)
     # players_penalty_amount = GamePlayer.group(:player_id).sum(:penalty_amount)
     players_points_count.each do |player|
       # game_count = GamePlayer.where(player_id: player[0]).count
-      game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).count
+      game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).where('games.students_league = false').count
 
       nick = Player.where(id: player[0]).first
       # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
-      object[:penalty_amount] = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).sum(:penalty_amount)
+      object[:penalty_amount] = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).where('games.students_league = false').sum(:penalty_amount)
       # 0.25 - это дополнительный коефициент за колличество игр
       rating = ((player[1] / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
       object[:game_count] = game_count
@@ -35,7 +35,7 @@ class PlayersController < ApplicationController
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
     # Получаем колличество игр, которые необходимо сыгать для рейтинга
-    game_count = (Game.where(big_tournament_tour_id: nil).count.to_f / 100) * 25
+    game_count = (Game.where(big_tournament_tour_id: nil).where(students_league: false).count.to_f / 100) * 25
     position = 1
     # В будущем вынести это в настройки к каждому игроку!!!!!
     banned_nicks = ['Клайд']
