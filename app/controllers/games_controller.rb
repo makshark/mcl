@@ -39,7 +39,7 @@ class GamesController < ApplicationController
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
     # Получаем колличество игр, которые необходимо сыгать для рейтинга
-    game_count = (Game.where(big_tournament_tour_id: nil).where(students_league: true).count.to_f / 100) * 20
+    game_count = (Game.where(students_league: true).count.to_f / 100) * 20
     position = 1
     # В будущем вынести это в настройки к каждому игроку!!!!!
     banned_nicks = ['Клайд']
