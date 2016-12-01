@@ -63,7 +63,7 @@ class GamesController < ApplicationController
 
   def studliga_games
     # hardcode
-    @games = Game.where(students_league: true).order(number: :desc)
+    @games = Game.where(students_league: true).where('extract(month from date) = ?', 11).order(date: :desc)
     render action: 'index'
   end
   ############# end ##########################
