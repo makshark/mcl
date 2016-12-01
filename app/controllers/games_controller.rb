@@ -25,7 +25,7 @@ class GamesController < ApplicationController
     # players_penalty_amount = GamePlayer.group(:player_id).sum(:penalty_amount)
     players_points_count.each do |player|
       # game_count = GamePlayer.where(player_id: player[0]).count
-      game_count = GamePlayer.joins(:game).where('game_players.player_id = (?) ', player[0]).where('games.students_league = true').count
+      game_count = GamePlayer.joins(:game).where('game_players.player_id = (?) ', player[0]).where('games.students_league = true AND extract(month from games.date) = 11').count
 
       nick = Player.where(id: player[0]).first
       # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
