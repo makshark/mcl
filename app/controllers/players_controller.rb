@@ -55,6 +55,8 @@ class PlayersController < ApplicationController
       end
     end
 
+    render template: 'players/players_rating', locals: { studliga: false }
+
   end
 
   # GET /players

@@ -58,7 +58,7 @@ class GamesController < ApplicationController
         end
       end
     end
-    render template: 'players/players_rating'
+    render template: 'players/players_rating', locals: { studliga: true }
   end
 
   def studliga_games
