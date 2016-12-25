@@ -10,6 +10,7 @@
 <div class="space-50"></div>
 <div class="container">
   <div class="raw">
+    <% if current_admnin.present? %>
     <div class="cold-md-12">
       <table class="table table-condensed table-bordered table-hover">
         <thead>
@@ -35,5 +36,6 @@
         <% end %>
       </table>
     </div>
+    <% end %>
   </div>
 </div>
