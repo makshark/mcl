@@ -87,6 +87,8 @@ class GamePlayer < ActiveRecord::Base
       points_sum += 1.1 if best_table
       #метод лучшего игрока ведущий
       points_sum += 0.5 if best_leading
+      # умножаем на 2 если финальные игры года и есть поле дабл поинтс
+      points_sum *= 2   if game.double_points
       #Обновление записи с очками
       self.update_columns(points: points_sum) # Напрямую обновляем запись минуя валидации
     end

@@ -86,6 +86,7 @@ class GamesController < ApplicationController
 
   def create_game
     students_league = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:students_league])
+    double_points = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:double_points])
     # Создаем игру со всеми ее параметрами
     # TODO: создать для каждой лиги настройки, в которых будет храниться игра (что бы понимать номер)
     if params[:game_id].present?
@@ -105,7 +106,7 @@ class GamesController < ApplicationController
         end
       end
     else
-      if game = Game.create(game_params.merge(students_league: students_league))
+      if game = Game.create(game_params.merge(students_league: students_league, double_points: double_points))
         if params[:best_game_move].present?
           params[:best_game_move].each do |best_game_move|
             BestGameMove.create(game_id: game.id, player_id: best_game_move)
@@ -123,6 +124,7 @@ class GamesController < ApplicationController
     # TODO: есть такой же метод, его нужно объеденить, либо сделать решение лучше, мб в будущем вынести это в сам процесс подсчета
     if pl = GamePlayer.where(player_id: params[:killed_first_id], game_id: game.id).first
       best_player_move_count = pl.best_move
+      best_player_move_count *= 2 if pl.game.double_points
       total = pl.points + best_player_move_count
       pl.update_attribute(:points, total) unless best_player_move_count == 0
     end
