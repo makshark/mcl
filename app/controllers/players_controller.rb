@@ -41,6 +41,7 @@ class PlayersController < ApplicationController
     banned_nicks = ['Клайд']
     # Чёрный список (временное очень быстрое решение, в будущем переделать!)
     # Так же в это алгоритме используется пересчет мест
+    dg = ['Дин', 'Trevery', 'Борщ', 'Оливка', 'Хохольчик', 'Snow', 'RiT', 'Эммануэль', 'Чикаго', 'Сарказм']
     @result_array.each do |player|
       if banned_nicks.include?(player[:nick])
         player[:position] = 'banned'
@@ -51,6 +52,9 @@ class PlayersController < ApplicationController
           position += 1
         else
           player[:position] = ''
+        end
+        if dg.include?(player[:nick])
+          player[:game_count] += 1
         end
       end
     end
