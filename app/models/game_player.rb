@@ -182,3 +182,122 @@ class GamePlayer < ActiveRecord::Base
     game.killed_first_id == self.player_id ? true : false
   end
 end
+
+# k - id игрока, value - победа или нет если победа +1
+
+results = {}
+
+winrate = {}
+
+game_ids = Game.current_season.where(students_league: false).pluck(:id)
+b = GamePlayer.where(game_id: game_ids)
+
+
+b.each do |game_player|
+  # winning_team = game_player.game.victory
+  if game_player.role == 'citizen' || game_player.role == 'sheriff'
+      if results[game_player.player_id].present?
+        results[game_player.player_id] += 1
+      else
+        results[game_player.player_id] = 1
+      end
+    end
+end
+
+# game_count = Game.current_season.where(students_league: false).joins(:game_players).where("game_players.player_id = ? AND game_players.role = 1", k).count
+
+
+results.each do |k, v|
+     game_ids = Game.current_season.where(students_league: false).where(killed_first_id: k).count
+     # game_count = GamePlayer.where(game_id: game_ids).where(player_id: k, role: 2).count
+    #считаем винрейт
+    w = (100.to_f / v) * game_ids
+    winrate[Player.find(k).nick] = w
+end
+
+d = Hash[winrate.sort_by { |_,v| v }.reverse]
+
+t = ''
+d.each do |k,v|
+  t +=  "#{Player.find(k).try(:nick)}" + "   #{v}   "
+end
+
+#enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
+
+# best game move ---------------------------------------------------------------------------------------------------------
+game_count = {}
+best_count = {}
+total = {}
+
+games = Game.current_season.where(students_league: false)
+
+games.each do |game|
+  if game.killed_first_id.present?
+    if game_count[game.killed_first_id].present?
+      game_count[game.killed_first_id] += 1
+    else
+      game_count[game.killed_first_id] = 1
+    end
+    game_player = GamePlayer.where(game_id: game.id, player_id: game.killed_first_id).first
+    if (game_player.role == 'sheriff' || game_player.role == 'citizen')
+      best_move_count = 0
+      BestGameMove.where(game_id: game.id).each do |move|
+        if move.player_id
+          game_player = GamePlayer.where(game_id: game.id, player_id: move.player_id).first
+          if game_player.try(:role) == 'don' || game_player.try(:role) == 'mafia'
+            best_move_count += 1
+          end
+        end
+      end
+      if best_move_count == 2 || best_move_count == 3
+        if best_count[game.killed_first_id].present?
+          best_count[game.killed_first_id] += 1
+        else
+          best_count[game.killed_first_id] = 1
+        end
+      end
+    end
+  end
+end
+
+
+best_count.each do |k, v|
+  total[Player.find(k).nick] = (100.to_f / game_count[k]) * v
+end
+
+
+
+
+
+d = Hash[total.sort_by { |_,v| v }.reverse]
+
+t = ''
+d.each do |k,v|
+  t +=  "#{Player.find(k).try(:nick)}" + "   #{v}   "
+end
+
+
+
+# игровые роли и место за игровым столом
+game_ids = Game.current_season.where(students_league: false).pluck(:id)
+game_players = GamePlayer.where(game_id: game_ids)
+
+result = {}
+new_result = {}
+
+game_players.each do |player|
+    if result[player.player.nick].present?
+      result[player.player.nick][:remarks] += player.remark
+      result[player.player.nick][:games] += 1
+    else
+      result[player.player.nick] = {}
+      result[player.player.nick][:remarks] = 0
+      result[player.player.nick][:games] = 0
+    end
+end
+
+result.each do |k|
+  if k[1][:games] > 70
+    new_result[k[0]] = k[1][:remarks].to_f / k[1][:games]
+  end
+end
