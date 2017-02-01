@@ -4,6 +4,7 @@ server '46.101.206.4', roles: [:web, :app, :db], primary: true
 set :repo_url,        'git@github.com:makshark/mcl.git'
 set :application,     'mcl'
 set :user,            'deploy'
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
