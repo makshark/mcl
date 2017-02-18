@@ -142,8 +142,8 @@ class GamePlayer < ActiveRecord::Base
           end
         elsif (self.game.big_tournament_tour_id != 10)
           if role == 'sheriff'
-            return 0 if best_move_count == 2
-            return 0.25 if best_move_count == 3
+            return 0.25 if best_move_count == 2
+            return 0.5 if best_move_count == 3
           elsif role == 'citizen'
             return 0.25 if best_move_count == 2
             return 0.5 if best_move_count == 3
