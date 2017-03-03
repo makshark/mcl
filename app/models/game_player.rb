@@ -134,16 +134,16 @@ class GamePlayer < ActiveRecord::Base
         mcl_tours = [10] # захрадкоженные туры big_tournament_tour_id для которых не нужно считать у первоубиенного лучший ход если выиграли мирные
         if (self.game.big_tournament_tour_id == 10 && self.game.mafia? )
           if role == 'sheriff'
-            return 0 if best_move_count == 2
-            return 0.25 if best_move_count == 3
+            return 0.25 if best_move_count == 2
+            return 0.5 if best_move_count == 3
           elsif role == 'citizen'
             return 0.25 if best_move_count == 2
             return 0.5 if best_move_count == 3
           end
         elsif (self.game.big_tournament_tour_id != 10)
           if role == 'sheriff'
-            return 0 if best_move_count == 2
-            return 0.25 if best_move_count == 3
+            return 0.25 if best_move_count == 2
+            return 0.5 if best_move_count == 3
           elsif role == 'citizen'
             return 0.25 if best_move_count == 2
             return 0.5 if best_move_count == 3
