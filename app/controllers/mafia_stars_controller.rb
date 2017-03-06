@@ -98,15 +98,10 @@ class MafiaStarsController < ApplicationController
       @result_array << object
       object = {}
     end
-    @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
-
-    ###### Сильный хардкод, для того что бы в одной из серий mcl поменять местами 1 и 2 место (разница по лучшим)
-    ## на логику приложения никак не влияет, в будущем - переделается!
-    if params[:id] == '13'
-      # меняем местами лачу и борща
-      @result_array.insert(0, @result_array.delete_at(1))
+    @result_array = @result_array.sort do |a,b|
+      [b[:rating], b[:best_count]] <=> [a[:rating], a[:best_count]]
     end
-
+    
     ######
     @games = Game.where(big_tournament_tour_id: params[:id]).order(:created_at)
     # TODO: разобраться, почему не работает, когда обращаюь через mafia, city (в поле victory)
