@@ -3,7 +3,7 @@ class MafiaStarsController < ApplicationController
 
   def index
     # List of all big tournaments tours
-    @tours = BigTournamentTour.all.order(:created_at)
+    @tours = BigTournamentTour.all.order(created_at: :desc)
   end
 
   def mafia_stars_results
