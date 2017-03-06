@@ -28,13 +28,6 @@ class MiniTournamentsController < ApplicationController
         @mini_tournament_players[nick][:penalty_amount] += player.penalty_amount
       end
     end
-
-    # Убрать очки за штрафы
-    @mini_tournament_players.each do |k,_|
-      @mini_tournament_players[k][:penalty_amount_total] = @mini_tournament_players[k][:penalty_amount] * 0.5
-      @mini_tournament_players[k][:total] -= @mini_tournament_players[k][:penalty_amount_total]
-    end
-    
     total = 0
     @mini_tournament_players.each do |k, v|
       v.each do |one_player_k, one_player_v|
@@ -42,6 +35,13 @@ class MiniTournamentsController < ApplicationController
       end
       @mini_tournament_players[k][:total] = total.round(1)
       total = 0
+    end
+
+    # Убрать очки за штрафы
+    @mini_tournament_players.each do |k,_|
+      @mini_tournament_players[k][:penalty_amount_total] = @mini_tournament_players[k][:penalty_amount] * 0.5
+      @mini_tournament_players[k][:total] -= @mini_tournament_players[k][:penalty_amount_total]
+      @mini_tournament_players[k][:total] = @mini_tournament_players[k][:total].round(1)
     end
 
     @mini_tournament_players = @mini_tournament_players.sort_by { |_, value| value[:total] }.reverse.to_h
