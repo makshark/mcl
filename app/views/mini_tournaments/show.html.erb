@@ -27,8 +27,7 @@
               <% end %>
               <td><%= print_points_without_zero(value[:total]) %></td>
               <td><%= value[:remarks] %></td>
-              <td><%= value[:penalty_amount] %></td>
-
+              <td><%= value[:penalty_amount].to_s + ' ( -' + value[:penalty_amount_total].to_s + ')'  %> </td>
             </tr>
             </tbody>
         <% end %>

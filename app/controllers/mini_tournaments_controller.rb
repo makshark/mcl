@@ -21,19 +21,28 @@ class MiniTournamentsController < ApplicationController
       players_of_game.each do |player|
         nick = player.player.nick
         @mini_tournament_players[nick] ||= {}
-        @mini_tournament_players[nick][:remarks] || @mini_tournament_players[nick][:remarks] = 0
+        @mini_tournament_players[nick][:remarks] ||= 0
+        @mini_tournament_players[nick][:penalty_amount] ||= 0
         @mini_tournament_players[nick][game_symbol] = player.points.to_s
         @mini_tournament_players[nick][:remarks] += player.remark
+        @mini_tournament_players[nick][:penalty_amount] += player.penalty_amount
       end
     end
     total = 0
     @mini_tournament_players.each do |k, v|
       v.each do |one_player_k, one_player_v|
-        total += one_player_v.to_f if one_player_k != :total && one_player_k != :remarks
+        total += one_player_v.to_f if one_player_k != :total && one_player_k != :remarks && one_player_k != :penalty_amount
       end
       @mini_tournament_players[k][:total] = total.round(1)
       total = 0
     end
+
+    # Убрать очки за штрафы
+    @mini_tournament_players.each do |k,_|
+      @mini_tournament_players[k][:penalty_amount_total] = @mini_tournament_players[k][:penalty_amount] * 0.5
+      @mini_tournament_players[k][:total] -= @mini_tournament_players[k][:penalty_amount_total]
+    end
+
     @mini_tournament_players = @mini_tournament_players.sort_by { |_, value| value[:total] }.reverse.to_h
     colors = %w(#FFD700 #FFE647 #FFFC65)
     @mini_tournament_players.each_with_index do |player, index|
