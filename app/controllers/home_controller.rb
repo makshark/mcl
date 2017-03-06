@@ -2,8 +2,8 @@ class HomeController < ApplicationController
   before_action :authenticate_admin!, only: [:index]
   def index
     # Game.main_excel_parser
-    @mini_tournaments = MiniTournament.all
-    @mafia_stars_tours = BigTournamentTour.all # TODO: обязательно это исправить
+    @mini_tournaments = MiniTournament.all.order(created_at: :desc)
+    @mafia_stars_tours = BigTournamentTour.all.order(created_at: :desc) # TODO: обязательно это исправить
   end
 
   def main_page

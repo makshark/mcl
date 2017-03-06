@@ -4,7 +4,7 @@ class MiniTournamentsController < ApplicationController
   # GET /mini_tournaments
   # GET /mini_tournaments.json
   def index
-    @mini_tournaments = MiniTournament.where('extract(year from mini_tournaments.created_at) = 2017').order(created_at: :desc)
+    @mini_tournaments = MiniTournament.all.order(created_at: :desc)
   end
 
   # GET /mini_tournaments/1
