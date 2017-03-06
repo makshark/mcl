@@ -75,7 +75,7 @@ class GamePlayer < ActiveRecord::Base
           if self.win?
             points_sum += 3.5
           else
-            self.killed_first? ? points_sum += 0 : points_sum = -1
+            self.killed_first? ? points_sum += 0 : points_sum = -0.5
           end
         when 'citizen'
           if self.win?
