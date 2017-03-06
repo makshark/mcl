@@ -2,11 +2,11 @@
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text-small">
-      <%= studliga ? 'Рейтинг Student league IV сезон (2016/2017)' : 'Рейтинг VI сезон (2016 г.)' %>
+      <%= studliga ? 'Рейтинг Student league IV сезон (2016/2017)' : 'Рейтинг VII сезон (2017 г.)' %>
     </h3>
   </div>
 </section><!--page-tree end here-->
-
+<% if current_admin.present? %>
 <div class="space-50"></div>
 <div class="container">
   <div class="raw">
@@ -37,3 +37,4 @@
     </div>
   </div>
 </div>
+<% end %>

@@ -9,4 +9,8 @@ class Season < ActiveRecord::Base
     current_season = Season.where(current: true).first
     current_season.game_number
   end
+
+  def self.current_season
+    Season.where(current: true).first
+  end
 end

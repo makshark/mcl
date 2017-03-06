@@ -3,7 +3,7 @@
   <div class="container">
     <h3 class="page-tree-text">
       <% unless params[:tournament] == 'ms' %>
-          Рейтинговая игра
+          Рейтинговая игра # <%= Season.current_game_number %>
       <% else %>
           Mafia Stars Game
       <% end %>
@@ -86,7 +86,8 @@
               <th>ЛИ3</th>
           <% else %>
               <th>ЛИС</th>
-              <th>ЛИВ</th>
+              <th>ЛИВ1</th>
+              <th>ЛИВ2</th>
           <% end %>
           <th>Убитый</th>
           <th>Штраф</th>
@@ -129,6 +130,7 @@
               <% else %>
                   <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
                   <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
+                  <td class="pointer text-center" id="bestPlayerLeading1<%= id %>"></td>
               <% end %>
               <td class="pointer text-center" id="killedFirst<%= id %>"></td>
               <td>

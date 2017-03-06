@@ -14,7 +14,7 @@ class Game < ActiveRecord::Base
   after_create :increase_current_game_season_count, unless: ->(g) { g.students_league }
   before_create :set_number, unless: ->(g) { g.students_league }
   enum victory: { city: 0, mafia: 1, draw: 2 }
-  scope :current_season, -> { where(big_tournament_tour: nil) } # TODO: в будущем, возможно переделать это решение
+  scope :current_season, -> { where(big_tournament_tour: nil, season_id: Season.current_season.id, students_league: false) }
 
 
 

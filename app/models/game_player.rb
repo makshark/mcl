@@ -8,6 +8,8 @@ class GamePlayer < ActiveRecord::Base
   belongs_to :player
   enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
 
+  scope :current_main_season, -> { joins(:game).where('games.big_tournament_tour_id IS NULL AND games.students_league = false AND games.season_id = 2 ', Season.current_season.id) }
+
 
   def self.normalize_role(role)
     role.sub(' ', '') unless role.nil?
@@ -68,12 +70,12 @@ class GamePlayer < ActiveRecord::Base
         when 'mafia'
           self.win? ? points_sum += 3 : points_sum += 0
         when 'don'
-          self.win? ? points_sum += 4 : points_sum -=1
+          self.win? ? points_sum += 3.5 : points_sum -= 0.5
         when 'sheriff'
           if self.win?
-            points_sum += 4
+            points_sum += 3.5
           else
-            self.killed_first? ? points_sum += 0 : points_sum =-1
+            self.killed_first? ? points_sum += 0 : points_sum = -1
           end
         when 'citizen'
           if self.win?
@@ -84,9 +86,11 @@ class GamePlayer < ActiveRecord::Base
       end
 
       #метод лучшего игрока стол
-      points_sum += 1.1 if best_table
+      points_sum += 0.6 if best_table
       #метод лучшего игрока ведущий
       points_sum += 0.5 if best_leading
+      #метод лучшего игрока ведущий 1
+      points_sum += 0.3 if best_leading1
       # умножаем на 2 если финальные игры года и есть поле дабл поинтс
       points_sum *= 2   if game.double_points
       #Обновление записи с очками

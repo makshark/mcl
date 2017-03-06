@@ -11,56 +11,39 @@ class PlayersController < ApplicationController
   end
 
   def players_rating
+    # Чёрный список (временное очень быстрое решение, в будущем переделать!)
+    banned_nicks = ['Клайд']
     @result_array = []
     object = {}
-    # TODO: очень быдловское решение, если не исправлю - будет стыдно
-    # players_points_count = GamePlayer.group(:player_id)
-    #                            .sum(:points)
-    players_points_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL').where('games.students_league = false').group(:player_id).sum(:points)
-    # players_penalty_amount = GamePlayer.group(:player_id).sum(:penalty_amount)
+    players_points_count = GamePlayer.current_main_season.group(:player_id).sum(:points)
     players_points_count.each do |player|
-      # game_count = GamePlayer.where(player_id: player[0]).count
-      game_count = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).where('games.students_league = false').count
-
-      nick = Player.where(id: player[0]).first
-      # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
-      object[:penalty_amount] = GamePlayer.joins(:game).where('games.big_tournament_tour_id IS NULL AND game_players.player_id = (?)', player[0]).where('games.students_league = false').sum(:penalty_amount)
+      object[:game_count] = GamePlayer.current_main_season.where(player_id: player[0]).count
+      object[:nick] = Player.where(id: player[0]).first.try(:nick)
+      object[:penalty_amount] = GamePlayer.current_main_season.where(player_id: player[0]).sum(:penalty_amount)
       # 0.25 - это дополнительный коефициент за колличество игр
-      rating = ((player[1] / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
-      object[:game_count] = game_count
-      object[:nick] = nick.try(:nick)
-      object[:rating] = rating
+      object[:rating] = ((player[1] / object[:game_count].to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * object[:game_count].to_f)
       @result_array << object
       object = {}
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
     # Получаем колличество игр, которые необходимо сыгать для рейтинга
-    game_count = (Game.where(big_tournament_tour_id: nil).where(students_league: false).count.to_f / 100) * 25
+    game_count = (Game.current_season.count.to_f / 100) * 20 # 20 - колличество процентов
     position = 1
     # В будущем вынести это в настройки к каждому игроку!!!!!
-    banned_nicks = ['Клайд']
-    # Чёрный список (временное очень быстрое решение, в будущем переделать!)
-    # Так же в это алгоритме используется пересчет мест
-    dg = ['Дин', 'Trevery', 'Борщ', 'Оливка', 'Хохольчик', 'Snow', 'RiT', 'Эммануэль', 'Чикаго', 'Сарказм']
     @result_array.each do |player|
       if banned_nicks.include?(player[:nick])
         player[:position] = 'banned'
       else
-        # Отыграл 25 процентов игр, или нет
+        # Отыграл 20 процентов игр, или нет
         if player[:game_count] > game_count
           player[:position] = position
           position += 1
         else
           player[:position] = ''
         end
-        if dg.include?(player[:nick])
-          player[:game_count] += 1
-        end
       end
     end
-
     render template: 'players/players_rating', locals: { studliga: false }
-
   end
 
   # GET /players

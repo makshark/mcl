@@ -1,11 +1,10 @@
 class GamesController < ApplicationController
   before_action :authenticate_admin!, only: [:create_game]
-  # TODO: обязательно подобавлять по 0.25 за все игры
-  # TODO: посмотреть пример с транзакциейв аутсорс пипл и сделать все это действие транзакцией
+
   # Список всех игр
   def index
     # hardcode
-    @games = Game.current_season.where(students_league: false).order(number: :desc)
+    @games = Game.current_season.order(number: :desc)
   end
 
   ####### studliga need to remove all this shit! ######
@@ -87,11 +86,12 @@ class GamesController < ApplicationController
   def create_game
     students_league = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:students_league])
     double_points = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:double_points])
+    season_id = Season.current_season.id unless students_league # хардкод для сезона
     # Создаем игру со всеми ее параметрами
     # TODO: создать для каждой лиги настройки, в которых будет храниться игра (что бы понимать номер)
     if params[:game_id].present?
       game = Game.where(id: params[:game_id]).first
-      game.update(game_params.merge(students_league: students_league))
+      game.update(game_params.merge(students_league: students_league, season_id: season_id))
       # Создание игроков игры
       if params[:game_players].present?
         GamePlayer.where(game_id: game.id).destroy_all
@@ -106,7 +106,7 @@ class GamesController < ApplicationController
         end
       end
     else
-      if game = Game.create(game_params.merge(students_league: students_league, double_points: double_points))
+      if game = Game.create(game_params.merge(students_league: students_league, double_points: double_points, season_id: season_id))
         if params[:best_game_move].present?
           params[:best_game_move].each do |best_game_move|
             BestGameMove.create(game_id: game.id, player_id: best_game_move)
