@@ -101,7 +101,7 @@ class MafiaStarsController < ApplicationController
     @result_array = @result_array.sort do |a,b|
       [b[:rating], b[:best_count]] <=> [a[:rating], a[:best_count]]
     end
-    
+
     ######
     @games = Game.where(big_tournament_tour_id: params[:id]).order(:created_at)
     # TODO: разобраться, почему не работает, когда обращаюь через mafia, city (в поле victory)
