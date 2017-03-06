@@ -10,7 +10,7 @@
 <div class="space-50"></div>
 <div class="container">
   <% if current_admin.present? %>
-    <p><%= link_to 'Добавить игру', add_game_path %></p>
+    <p><%= link_to 'Добавить игру', add_game_path(tournament: 'sl') %></p>
    <% end %>
   <p><%= link_to 'Список игр', studliga_games_path %></p>
   <p><%= link_to 'Рейтинг', studliga_rating_path %></p>

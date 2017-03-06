@@ -2,10 +2,12 @@
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text">
-      <% unless params[:tournament] == 'ms' %>
-          <%= 'Рейтинговая игра #' + @game.try(:number).to_s %>
-      <% else %>
+      <% if params[:tournament] == 'ms' %>
           Mafia Stars Game
+      <% elsif params[:tournament] == 'sl' %>
+          Students league
+      <% else %>
+          <%= 'Рейтинговая игра #' + @game.try(:number).to_s %>
       <% end %>
     </h3>
   </div>
@@ -80,6 +82,9 @@
               <th>ЛИ1</th>
               <th>ЛИ2</th>
               <th>ЛИ3</th>
+          <% elsif params[:tournament] == 'sl' %>
+              <th>ЛИС</th>
+              <th>ЛИВ</th>
           <% else %>
               <th>ЛИС</th>
               <th>ЛИВ1</th>
@@ -119,6 +124,9 @@
                   <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
                   <td class="pointer text-center" id="bestPlayerLeading1<%= player.table_number %>"><%= "<span id='best_player_leading1_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading1_id %></td>
                   <td class="pointer text-center" id="bestPlayerLeading2<%= player.table_number %>"><%= "<span id='best_player_leading2_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading2_id %></td>
+              <% elsif params[:tournament] == 'sl' %>
+                  <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>
+                  <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>
             <% else %>
                   <td class="pointer text-center" id="bestPlayerTable<%= player.table_number %>"><%= "<span id='best_player_table_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_table_id %> </td>
                   <td class="pointer text-center" id="bestPlayerLeading<%= player.table_number %>"><%= "<span id='best_player_leading_id' class='glyphicon glyphicon-user' aria-hidden='true'></span>".html_safe if player.player_id == @game.best_player_leading_id %></td>

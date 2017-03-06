@@ -64,6 +64,36 @@ class GamePlayer < ActiveRecord::Base
       points_sum += 0.5 if best_leading2
       #Обновление записи с очками
       self.update_columns(points: points_sum) # Напрямую обновляем запись минуя валидации
+      # студлига
+    elsif self.game.students_league
+      points_sum = 0
+      case role
+        when 'mafia'
+          self.win? ? points_sum += 3 : points_sum += 0
+        when 'don'
+          self.win? ? points_sum += 4 : points_sum -= 1
+        when 'sheriff'
+          if self.win?
+            points_sum += 4
+          else
+            self.killed_first? ? points_sum += 0 : points_sum = -1
+          end
+        when 'citizen'
+          if self.win?
+            points_sum += 3
+          else
+            self.killed_first? ? points_sum += 1 : points_sum += 0
+          end
+      end
+
+      #метод лучшего игрока стол
+      points_sum += 1.1 if best_table
+      #метод лучшего игрока ведущий
+      points_sum += 0.5 if best_leading
+      # умножаем на 2 если финальные игры года и есть поле дабл поинтс
+      points_sum *= 2   if game.double_points
+      #Обновление записи с очками
+      self.update_columns(points: points_sum) # Напрямую обновляем запись минуя валидации
     else
       points_sum = 0
       case role
@@ -96,8 +126,6 @@ class GamePlayer < ActiveRecord::Base
       #Обновление записи с очками
       self.update_columns(points: points_sum) # Напрямую обновляем запись минуя валидации
     end
-
-
   end
 
   #Лучший игрок по мнению стола

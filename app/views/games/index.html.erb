@@ -29,7 +29,7 @@
               <td><%= game.leading.try(:nick) %></td>
               <td><%= game.victory %></td>
               <td><%= game.date %></td>
-              <td><%= link_to('Просмотр', show_game_path(id: game.id)) %></td>
+              <td><%= link_to('Просмотр', show_game_path(id: game.id, tournament: 'sl')) %></td>
             <tr>
             </tbody>
         <% end %>

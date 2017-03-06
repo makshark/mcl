@@ -2,10 +2,12 @@
 <section id="content-region-3" class="padding-40 page-tree-bg">
   <div class="container">
     <h3 class="page-tree-text">
-      <% unless params[:tournament] == 'ms' %>
-          Рейтинговая игра # <%= Season.current_game_number %>
-      <% else %>
+      <% if params[:tournament] == 'ms' %>
           Mafia Stars Game
+      <% elsif params[:tournament] == 'sl' %>
+          Students league
+      <% else %>
+          Рейтинговая игра # <%= Season.current_game_number %>
       <% end %>
     </h3>
   </div>
@@ -84,6 +86,9 @@
               <th>ЛИ1</th>
               <th>ЛИ2</th>
               <th>ЛИ3</th>
+          <% elsif params[:tournament] == 'sl' %>
+              <th>ЛИС</th>
+              <th>ЛИВ</th>
           <% else %>
               <th>ЛИС</th>
               <th>ЛИВ1</th>
@@ -127,6 +132,9 @@
                   <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
                   <td class="pointer text-center" id="bestPlayerLeading1<%= id %>"></td>
                   <td class="pointer text-center" id="bestPlayerLeading2<%= id %>"></td>
+              <% elsif params[:tournament] == 'sl' %>
+                  <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
+                  <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>
               <% else %>
                   <td class="pointer text-center" id="bestPlayerTable<%= id %>"></td>
                   <td class="pointer text-center" id="bestPlayerLeading<%= id %>"></td>

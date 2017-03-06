@@ -131,6 +131,8 @@ class GamesController < ApplicationController
 
     if params[:big_tournament_tour_id].present?
       redirect_link = "/show_game/#{game.id}/?tournament=ms"
+    elsif students_league
+      redirect_link = "/show_game/#{game.id}/?tournament=sl"
     else
       redirect_link = "/show_game/#{game.id}"
     end
