@@ -4,6 +4,7 @@
 class GamePlayer < ActiveRecord::Base
   attr_accessor :position
   after_create :calculate_points
+  before_save :check_penalty_amount
   belongs_to :game
   belongs_to :player
   enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
@@ -23,6 +24,11 @@ class GamePlayer < ActiveRecord::Base
       else
         'citizen'
     end
+  end
+
+  # Иногда возникает ошибка, что penalty amount = nil
+  def check_penalty_amount
+    self.penalty_amount = 0 if self.penalty_amount.nil?
   end
 
   #TODO: так же добавить после апдейта игры, пересчет всех сущностей
