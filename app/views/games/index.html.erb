@@ -23,13 +23,15 @@
         </tr>
         </thead>
         <% @games.each do |game| %>
+            <%- h = { id: game.id }%>
+            <%- h[:tournament] = 'sl' if game.students_league %>
             <tbody >
             <tr>
               <td><%= game.number || '' %></td>
               <td><%= game.leading.try(:nick) %></td>
               <td><%= game.victory %></td>
               <td><%= game.date %></td>
-              <td><%= link_to('Просмотр', show_game_path(id: game.id, tournament: 'sl')) %></td>
+              <td><%= link_to('Просмотр', show_game_path(h)) %></td>
             <tr>
             </tbody>
         <% end %>
