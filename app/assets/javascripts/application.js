@@ -292,6 +292,15 @@ $(document).ready(function () {
             $("[id*='killedFirst']").removeClass('pointer');
         }
     });
+    $( "#date_month" ).change(function() {
+        var url = window.location.href;
+        var regEx = /([?&month_number])=([^#&]*)/g;
+        var new_value = '$1=' + $( "#date_month" ).val();
+        var newurl = url.replace(regEx, new_value);
+
+        window.location.replace(newurl);
+
+    });
 });
 function check_players_roles(players) {
    var roles = { citizen: 6, mafia: 2, don: 1, sheriff: 1 };
@@ -305,3 +314,4 @@ function check_players_roles(players) {
     }
 }
 //TODO: после добавление игры обновлять страницу и перекидывать на страницу с самой игрой (уже готовым результатом)
+

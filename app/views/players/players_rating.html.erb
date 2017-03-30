@@ -10,6 +10,10 @@
 <div class="space-50"></div>
 <div class="container">
   <div class="raw">
+    <% if current_admin.present? %>
+      <%= select_month(nil, prompt: 'Choose month') %>
+    <% end %>
+    <div class="space-10"></div>
     <div class="cold-md-12">
       <table class="table table-condensed table-bordered table-hover">
         <thead>

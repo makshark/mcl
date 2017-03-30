@@ -15,6 +15,7 @@ class Game < ActiveRecord::Base
   before_create :set_number, unless: ->(g) { g.students_league }
   enum victory: { city: 0, mafia: 1, draw: 2 }
   scope :current_season, -> { where(big_tournament_tour: nil, season_id: Season.current_season.id, students_league: false) }
+  scope :by_game_month, -> (month_number) { where('extract(month from date) = ?', month_number) if month_number.present? && month_number.to_i.nonzero? }
 
 
 

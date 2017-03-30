@@ -13,5 +13,5 @@
     <p><%= link_to 'Добавить игру', add_game_path(tournament: 'sl') %></p>
    <% end %>
   <p><%= link_to 'Список игр', studliga_games_path %></p>
-  <p><%= link_to 'Рейтинг', studliga_rating_path %></p>
+  <p><%= link_to 'Рейтинг', studliga_rating_path(month_number: 0) %></p>
 </div>
