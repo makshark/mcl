@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post '/list_of_players', to: 'players#list_of_players'
   post '/list_of_leadings', to: 'players#list_of_leadings'
   post '/create_game', to: 'games#create_game'
+  delete '/delete_game/:id', to: 'games#destroy', as: :destroy_game
   get '/games', to: 'games#index'
   get '/players_rating', to: 'players#players_rating'
   get '/add_game', to: 'home#index', as: :add_game

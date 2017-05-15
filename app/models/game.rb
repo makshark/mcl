@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   has_many :players
-  has_many :best_game_moves
-  has_many :game_players
+  has_many :best_game_moves, dependent: :destroy
+  has_many :game_players, dependent: :destroy
   belongs_to :killed_first, class_name: Player, foreign_key: :killed_first_id
   belongs_to :best_player_table, class_name: Player, foreign_key: :best_player_table_id
   belongs_to :best_player_leading, class_name: Player, foreign_key: :best_player_leading_id

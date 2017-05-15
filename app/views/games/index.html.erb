@@ -20,6 +20,9 @@
           <th>Победа</th>
           <th>Дата</th>
           <th></th>
+          <% if current_admin.present? %>
+              <th></th>
+          <% end %>
         </tr>
         </thead>
         <% @games.each do |game| %>
@@ -32,6 +35,9 @@
               <td><%= game.victory %></td>
               <td><%= game.date %></td>
               <td><%= link_to('Просмотр', show_game_path(h)) %></td>
+              <% if current_admin.present? %>
+                <td><%= link_to('Удалить', destroy_game_path(id: game.id),method: :delete, data: {confirm: 'Вы уверены что хотите удалить игру?'} ) %></td>
+              <% end %>
             <tr>
             </tbody>
         <% end %>

@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :authenticate_admin!, only: [:create_game]
+  before_action :authenticate_admin!, only: [:create_game, :destroy]
 
   # Список всех игр
   def index
@@ -137,6 +137,11 @@ class GamesController < ApplicationController
       redirect_link = "/show_game/#{game.id}"
     end
     render json: { status: 200, message: 'success', link: redirect_link }
+  end
+
+  def destroy
+    Game.find(params[:id]).destroy
+    redirect_to root_path
   end
 
   private
