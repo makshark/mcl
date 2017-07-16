@@ -72,7 +72,7 @@
                 <% end %>
               </table>
               <% if (@tour.try(:big_tournament).try(:mode) == 'double') %>
-                        <div class="col-md-6" style="text-align: center;">
+                        <div class="col-md-7" style="text-align: center;">
               <h3><strong>Командный рейтинг</strong></h3>
               <% if public_tour?(public: @tour.public) %>
                       <% if @result_array.empty? %>
