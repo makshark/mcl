@@ -123,7 +123,7 @@ class MafiaStarsController < ApplicationController
           if h1.class == String
             h1 == h2 ? h1 : h1 + ' ' + h2
           else
-            (h1 || 0) + (h2 || 0)
+            h1 + h2
           end
         end
       end
