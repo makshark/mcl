@@ -118,6 +118,7 @@ class MafiaStarsController < ApplicationController
         player[:tournament_players_team_name_id] = team.try(:tournament_players_team_name_id)
       end
       @total_group = @team_result_array.group_by { |d| d[:tournament_players_team_name_id] }
+      Rails.logger.info { "Debug, #{@total_group}" }
       @total_group.each do |e|
         @final_team << e[1].first.merge(e[1].last) do |_, h1, h2|
           if h1.class == String
