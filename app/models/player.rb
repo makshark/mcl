@@ -4,4 +4,5 @@ class Player < ActiveRecord::Base
   has_many :best_game_moves
   has_many :tournament_players_teams
   has_many :fates
+  validates :nick, uniqueness: true
 end

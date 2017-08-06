@@ -72,7 +72,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     respond_to do |format|
-      if @player.save(validate: false)
+      if @player.save
         format.html { redirect_to @player, notice: 'Player was successfully created.' }
         format.json { render :show, status: :created, location: @player }
       else
