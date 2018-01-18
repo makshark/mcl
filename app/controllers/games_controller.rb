@@ -28,8 +28,8 @@ class GamesController < ApplicationController
       nick = Player.where(id: player[0]).first
       # object[:penalty_amount] = GamePlayer.where(player_id: player[0]).sum(:penalty_amount)
       object[:penalty_amount] = GamePlayer.by_game_month(params[:month_number]).joins(:game).where('game_players.player_id = (?)', player[0]).where('games.students_league = true').sum(:penalty_amount)
-      # 0.25 - это дополнительный коефициент за колличество игр
-      rating = ((player[1] / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * game_count.to_f)
+      # 0.3 - это дополнительный коефициент за колличество игр
+      rating = ((player[1] / game_count.to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.3 * game_count.to_f)
       object[:game_count] = game_count
       object[:nick] = nick.try(:nick)
       object[:rating] = rating
