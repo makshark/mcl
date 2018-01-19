@@ -4,7 +4,19 @@ class GamesController < ApplicationController
   # Список всех игр
   def index
     # hardcode
-    @games = Game.current_season.order(number: :desc)
+    season_id = Season.current_season.id
+    # Season 1 - deprecated season, ask makshark or Yes why))
+    if params[:season_id].present? && params[:season_id] != 1 && params[:season_id] != season_id
+      season_id = Season.find(params[:season_id])
+    end
+    @games = Game.by_season(season_id).order(number: :desc)
+  end
+
+
+  def studliga_games
+    # hard code
+    @games = Game.where(students_league: true).order(date: :desc)
+    render action: 'index'
   end
 
   ####### studliga need to remove all this shit! ######
@@ -58,12 +70,6 @@ class GamesController < ApplicationController
       end
     end
     render template: 'players/players_rating', locals: { studliga: true }
-  end
-
-  def studliga_games
-    # hardcode
-    @games = Game.where(students_league: true).order(date: :desc)
-    render action: 'index'
   end
   ############# end ##########################
 

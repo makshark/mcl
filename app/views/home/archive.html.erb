@@ -1,0 +1,17 @@
+<div class="space-10"></div>
+<section id="content-region-3" class="padding-40 page-tree-bg">
+  <div class="container">
+    <h3 class="page-tree-text">
+      Архив сезонов
+    </h3>
+  </div>
+</section><!--page-tree end here-->
+<div class="space-50"></div>
+<div class="container">
+  <% @seasons.each do |season| %>
+      <p><%= season.name %>
+         <%= link_to 'Игры', games_path(season_id: season.id) %>
+         <%= link_to 'Рейтинг', players_rating_path(season_id: season.id) %>
+      </p>
+  <% end %>
+</div>

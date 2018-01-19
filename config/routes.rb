@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   post '/list_of_leadings', to: 'players#list_of_leadings'
   post '/create_game', to: 'games#create_game'
   delete '/delete_game/:id', to: 'games#destroy', as: :destroy_game
-  get '/games', to: 'games#index'
-  get '/players_rating', to: 'players#players_rating'
+  get '/games/:season_id', to: 'games#index', as: :games
+  get '/players_rating/:season_id', to: 'players#players_rating', as: :players_rating
   get '/add_game', to: 'home#index', as: :add_game
   get '/show_game/:id', to: 'games#show_game', as: :show_game
   post '/admin_or_not', to: 'application#admin_or_not'
@@ -29,4 +29,6 @@ Rails.application.routes.draw do
   get :studliga_games, to: 'games#studliga_games'
   get :studliga_rating, to: 'games#studliga_rating'
 
+
+  get :archive, to: 'home#archive', as: :archive
 end

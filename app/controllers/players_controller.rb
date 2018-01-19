@@ -11,23 +11,28 @@ class PlayersController < ApplicationController
   end
 
   def players_rating
+    @season = Season.current_season
+    # Season 1 - deprecated season, ask makshark or Yes why))
+    if params[:season_id].present? && params[:season_id] != 1 && params[:season_id] != @season.id
+      @season = Season.find(params[:season_id])
+    end
     # Чёрный список (временное очень быстрое решение, в будущем переделать!)
     banned_nicks = ['Клайд']
     @result_array = []
     object = {}
-    players_points_count = GamePlayer.current_main_season.group(:player_id).sum(:points)
+    players_points_count = GamePlayer.season(@season.id).group(:player_id).sum(:points)
     players_points_count.each do |player|
-      object[:game_count] = GamePlayer.current_main_season.where(player_id: player[0]).count
+      object[:game_count] = GamePlayer.season(@season.id).where(player_id: player[0]).count
       object[:nick] = Player.where(id: player[0]).first.try(:nick)
-      object[:penalty_amount] = GamePlayer.current_main_season.where(player_id: player[0]).sum(:penalty_amount)
-      # 0.25 - это дополнительный коефициент за колличество игр
-      object[:rating] = ((player[1] / object[:game_count].to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.25 * object[:game_count].to_f)
+      object[:penalty_amount] = GamePlayer.season(@season.id).where(player_id: player[0]).sum(:penalty_amount)
+      # 0.3 - это дополнительный коефициент за колличество игр
+      object[:rating] = ((player[1] / object[:game_count].to_f) * 100 + object[:penalty_amount] * (-0.5)) + (0.3 * object[:game_count].to_f)
       @result_array << object
       object = {}
     end
     @result_array = @result_array.sort_by { |hsh| hsh[:rating] }.reverse!
     # Получаем колличество игр, которые необходимо сыгать для рейтинга
-    game_count = (Game.current_season.count.to_f / 100) * 20 # 20 - колличество процентов
+    game_count = (Game.by_season(@season.id).count.to_f / 100) * 20 # 20 - колличество процентов
     position = 1
     # В будущем вынести это в настройки к каждому игроку!!!!!
     @result_array.each do |player|

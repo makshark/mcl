@@ -10,6 +10,9 @@ class HomeController < ApplicationController
 
   end
 
+  def archive
+    @seasons = Season.where.not(id: 1, current: true)
+  end
 
   def wtire_some_method_for_users
     #I need to create some checklist, in which i will plane my english education
