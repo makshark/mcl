@@ -9,7 +9,7 @@ class GamePlayer < ActiveRecord::Base
   belongs_to :player
   enum role: { mafia: 0, citizen: 1, don: 2, sheriff: 3 }
 
-  scope :current_main_season, -> { joins(:game).where('games.big_tournament_tour_id IS NULL AND games.students_league = false AND games.season_id = 2 ', Season.current_season.id) }
+  scope :current_main_season, -> { joins(:game).where('games.big_tournament_tour_id IS NULL AND games.students_league = false AND games.season_id = ? ', Season.current_season.id) }
   scope :by_game_month, -> (month_number) { joins(:game).where('extract(month from games.date) = ?', month_number) if month_number.present? && month_number.to_i.nonzero? }
 
 
